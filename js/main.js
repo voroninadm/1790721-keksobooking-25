@@ -1,4 +1,4 @@
-const TITLE = [
+const TITLES = [
   'Просторное бунгало без интернета, регистрации и смс.',
   'Уютный чердачок с видом на реку.',
   'Респектабельная квартира с шестью постоянно проживающими в ней котами.',
@@ -8,14 +8,14 @@ const TITLE = [
   'Капсульный отель.',
   'Широко известный в узких кругах отель.'
 ];
-const TYPE = [
+const TYPES = [
   'palace',
   'flat',
   'house',
   'bungalow',
   'hotel'
 ];
-const IN_OUT_TIME = [
+const IN_OUT_TIMES = [
   '12: 00',
   '13: 00',
   '14: 00'
@@ -28,7 +28,7 @@ const FEATURES = [
   'elevator',
   'conditioner'
 ];
-const DESCRIPTION = [
+const DESCRIPTIONS = [
   'Пpocтoтa и cдepжaннocть. Блaгoдapя этoмy в дoмe coздaeтcя пpиятнaя aтмocфepa, кoтopaя oтличнo пoдxoдит для oтдыxa и вoccтaнoвлeния.',
   'Отличный выбор для всех, кто любит сдержанный комфорт, семейный уют и тишину, а также для тех, кто хочет большего единения с природой, отдыха от суеты и людей.',
   'Удобное расположение в центре города, все в пешей доступности: до детского сада 5 минут (с усталым ребенком все 20), до поликлиники 10 минут. Рядом книжный магазин, караоке-бар и несколько ресторанов.',
@@ -44,16 +44,16 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-const USERS_SET = 10;
+const ADS_COUNT = 10;
 
-const getRandomPositiveInteger = (a = 0, b = USERS_SET) => {
+const getRandomPositiveInteger = (a = 0, b = ADS_COUNT) => {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
 
-const getRandomPositiveFloat = (a = 0, b = USERS_SET, digits = 1) => {
+const getRandomPositiveFloat = (a = 0, b = ADS_COUNT, digits = 1) => {
   const lower = Math.min(Math.abs(a), Math.abs(b));
   const upper = Math.max(Math.abs(a), Math.abs(b));
   const result = Math.random() * (upper - lower) + lower;
@@ -64,7 +64,10 @@ const getRandomMixedArray = (a, b, maxLength) => {
   const intArray = [];
   while (intArray.length < maxLength) {
     const int = getRandomPositiveInteger(a, b);
-    intArray.includes(int) == 0 ? intArray.push(int) : 'continue';
+    if (intArray.includes(int) === false){
+      intArray.push(int);
+    }
+    continue;
   }
   return intArray;
 };
@@ -72,7 +75,7 @@ const getRandomMixedArray = (a, b, maxLength) => {
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
 const getUniqueElementsArray = (array) => {
-  const uniqueNumber = getRandomPositiveInteger(a = 1, array.length-1);
+  const uniqueNumber = getRandomPositiveInteger(1, array.length - 1);
   const arrayOfIndex = getRandomMixedArray(0, uniqueNumber, uniqueNumber);
   const newArray = [];
   arrayOfIndex.forEach((element) => {
@@ -81,7 +84,7 @@ const getUniqueElementsArray = (array) => {
   return newArray;
 };
 
-const randomArray = getRandomMixedArray(1, USERS_SET, USERS_SET);
+const randomArray = getRandomMixedArray(1, ADS_COUNT, ADS_COUNT);
 const getImgNumber = () => {
   const number = randomArray.pop();
   if (number < 10) {
@@ -90,7 +93,7 @@ const getImgNumber = () => {
   return `${number}`;
 };
 
-const createObject = () => {
+const createOffer = () => {
   const lat = getRandomPositiveFloat(35.65000, 35.70000, 5);
   const lng = getRandomPositiveFloat(139.70000, 139.80000, 5);
   return {
@@ -98,16 +101,16 @@ const createObject = () => {
       avatar: `img/avatars/${getImgNumber()}.png`
     },
     offer: {
-      title: getRandomArrayElement(TITLE),
+      title: getRandomArrayElement(TITLES),
       address: `${lat}, ${lng}`,
       price: getRandomPositiveInteger(3000, 30000),
-      type: getRandomArrayElement(TYPE),
+      type: getRandomArrayElement(TYPES),
       rooms: getRandomPositiveInteger(1, 50),
       guests: getRandomPositiveInteger(1, 10),
-      checkin: getRandomArrayElement(IN_OUT_TIME),
-      checkout: getRandomArrayElement(IN_OUT_TIME),
+      checkin: getRandomArrayElement(IN_OUT_TIMES),
+      checkout: getRandomArrayElement(IN_OUT_TIMES),
       features: getUniqueElementsArray(FEATURES),
-      description: getRandomArrayElement(DESCRIPTION),
+      description: getRandomArrayElement(DESCRIPTIONS),
       photos: getUniqueElementsArray(PHOTOS)
     },
     location: {
@@ -117,5 +120,5 @@ const createObject = () => {
   };
 };
 
-const similarObjects = Array.from({ length: USERS_SET }, createObject);
-console.log(similarObjects);
+const similarObjects = () => Array.from({ length: ADS_COUNT }, createOffer);
+similarObjects();
