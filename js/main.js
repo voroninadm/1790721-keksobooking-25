@@ -1,3 +1,3 @@
 import {generateData} from './generate-data.js';
 
-console.log(generateData(10));
+generateData(10);
