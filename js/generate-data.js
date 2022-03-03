@@ -1,4 +1,4 @@
-import { getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getUniqueElementsArray, getImgNumber } from './utils.js';
+import { getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getUniqueElementsArray, getImgNumber, getRandomMixedArray } from './utils.js';
 
 const TITLES = [
   'Просторное бунгало без интернета, регистрации и смс.',
@@ -46,35 +46,37 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-const ADS_COUNT = 10;
+const generateData = (count) => {
+  const generateRandomArray = getRandomMixedArray(1, count, count);
 
-const createOffer = () => {
-  const lat = getRandomPositiveFloat(35.65000, 35.70000, 5);
-  const lng = getRandomPositiveFloat(139.70000, 139.80000, 5);
-  return {
-    author: {
-      avatar: `img/avatars/${getImgNumber(ADS_COUNT)}.png`
-    },
-    offer: {
-      title: getRandomArrayElement(TITLES),
-      address: `${lat}, ${lng}`,
-      price: getRandomPositiveInteger(3000, 30000),
-      type: getRandomArrayElement(TYPES),
-      rooms: getRandomPositiveInteger(1, 50),
-      guests: getRandomPositiveInteger(1, 10),
-      checkin: getRandomArrayElement(IN_OUT_TIMES),
-      checkout: getRandomArrayElement(IN_OUT_TIMES),
-      features: getUniqueElementsArray(FEATURES),
-      description: getRandomArrayElement(DESCRIPTIONS),
-      photos: getUniqueElementsArray(PHOTOS)
-    },
-    location: {
-      lat: lat,
-      lng: lng
-    }
+  const createOffer = () => {
+    const lat = getRandomPositiveFloat(35.65000, 35.70000, 5);
+    const lng = getRandomPositiveFloat(139.70000, 139.80000, 5);
+    return {
+      author: {
+        avatar: `img/avatars/${getImgNumber(generateRandomArray, count)}.png`
+      },
+      offer: {
+        title: getRandomArrayElement(TITLES),
+        address: `${lat}, ${lng}`,
+        price: getRandomPositiveInteger(3000, 30000),
+        type: getRandomArrayElement(TYPES),
+        rooms: getRandomPositiveInteger(1, 50),
+        guests: getRandomPositiveInteger(1, 10),
+        checkin: getRandomArrayElement(IN_OUT_TIMES),
+        checkout: getRandomArrayElement(IN_OUT_TIMES),
+        features: getUniqueElementsArray(FEATURES),
+        description: getRandomArrayElement(DESCRIPTIONS),
+        photos: getUniqueElementsArray(PHOTOS)
+      },
+      location: {
+        lat: lat,
+        lng: lng
+      }
+    };
   };
+
+  return Array.from({ length: count }, () => createOffer(count));
 };
 
-const similarObjects = () => Array.from({ length: ADS_COUNT }, createOffer);
-
-export { similarObjects };
+export { generateData };

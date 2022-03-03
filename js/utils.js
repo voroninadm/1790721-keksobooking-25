@@ -16,7 +16,7 @@ const getRandomMixedArray = (a, b, maxLength) => {
   const intArray = [];
   while (intArray.length < maxLength) {
     const int = getRandomPositiveInteger(a, b);
-    if (intArray.includes(int) === false){
+    if (intArray.includes(int) === false) {
       intArray.push(int);
     }
     continue;
@@ -36,15 +36,9 @@ const getUniqueElementsArray = (array) => {
   return newArray;
 };
 
-const randomArray = (count) => getRandomMixedArray(1, count, count);
-
-const getImgNumber = (count) => {
-  const array = randomArray(count);
+const getImgNumber = (array, count) => {
   const number = array.pop();
-  if (number < count) {
-    return `0${number}`;
-  }
-  return `${number}`;
+  return (number < count) ? `0${number}`: `${number}`;
 };
 
-export {getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getUniqueElementsArray, getImgNumber};
+export { getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getUniqueElementsArray, getImgNumber, getRandomMixedArray };
