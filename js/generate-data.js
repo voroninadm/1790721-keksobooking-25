@@ -46,37 +46,36 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-const generateData = (count) => {
-  const generateRandomArray = getRandomMixedArray(1, count, count);
-
-  const createOffer = () => {
-    const lat = getRandomPositiveFloat(35.65000, 35.70000, 5);
-    const lng = getRandomPositiveFloat(139.70000, 139.80000, 5);
-    return {
-      author: {
-        avatar: `img/avatars/${getImgNumber(generateRandomArray, count)}.png`
-      },
-      offer: {
-        title: getRandomArrayElement(TITLES),
-        address: `${lat}, ${lng}`,
-        price: getRandomPositiveInteger(3000, 30000),
-        type: getRandomArrayElement(TYPES),
-        rooms: getRandomPositiveInteger(1, 50),
-        guests: getRandomPositiveInteger(1, 10),
-        checkin: getRandomArrayElement(IN_OUT_TIMES),
-        checkout: getRandomArrayElement(IN_OUT_TIMES),
-        features: getUniqueElementsArray(FEATURES),
-        description: getRandomArrayElement(DESCRIPTIONS),
-        photos: getUniqueElementsArray(PHOTOS)
-      },
-      location: {
-        lat: lat,
-        lng: lng
-      }
-    };
+const createOffer = (array, count) => {
+  const lat = getRandomPositiveFloat(35.65000, 35.70000, 5);
+  const lng = getRandomPositiveFloat(139.70000, 139.80000, 5);
+  return {
+    author: {
+      avatar: `img/avatars/user${getImgNumber(array, count)}.png`
+    },
+    offer: {
+      title: getRandomArrayElement(TITLES),
+      address: `${lat}, ${lng}`,
+      price: getRandomPositiveInteger(3000, 30000),
+      type: getRandomArrayElement(TYPES),
+      rooms: getRandomPositiveInteger(1, 50),
+      guests: getRandomPositiveInteger(1, 10),
+      checkin: getRandomArrayElement(IN_OUT_TIMES),
+      checkout: getRandomArrayElement(IN_OUT_TIMES),
+      features: getUniqueElementsArray(FEATURES),
+      description: getRandomArrayElement(DESCRIPTIONS),
+      photos: getUniqueElementsArray(PHOTOS)
+    },
+    location: {
+      lat: lat,
+      lng: lng
+    }
   };
+};
 
-  return Array.from({ length: count }, () => createOffer(count));
+const generateData = (count) => {
+  const randomArray = getRandomMixedArray(1, count, count);
+  return Array.from({ length: count }, () => createOffer(randomArray,count));
 };
 
 export { generateData };

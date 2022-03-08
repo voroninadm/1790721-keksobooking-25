@@ -38,7 +38,7 @@ const getUniqueElementsArray = (array) => {
 
 const getImgNumber = (array, count) => {
   const number = array.pop();
-  return (number < count) ? `0${number}`: `${number}`;
+  return (number <= count) ? `0${number}`: `${number}`;
 };
 
 export { getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getUniqueElementsArray, getImgNumber, getRandomMixedArray };
