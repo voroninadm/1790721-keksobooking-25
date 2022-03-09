@@ -10,43 +10,43 @@ const similarAds = generateData(1);
 
 //creating new ads BY HTML TEMPLATE
 
-// similarAds.forEach((ad) => {
-//   const { title, address, price, type, rooms, guests, checkin, checkout, features, description, photos } = ad.offer;
-//   const { avatar } = ad.author;
+similarAds.forEach((ad) => {
+  const { title, address, price, type, rooms, guests, checkin, checkout, features, description, photos } = ad.offer;
+  const { avatar } = ad.author;
 
-//   const offerElement = offerTemplate.cloneNode(true);
+  const adItem = offerTemplate.cloneNode(true);
 
-//   offerElement.querySelector('.popup__title').textContent = title;
-//   offerElement.querySelector('.popup__text--address').textContent = address;
-//   offerElement.querySelector('.popup__text--price').textContent = `${price} ₽/ночь`;
-//   offerElement.querySelector('.popup__type').textContent = getLiv(type);
-//   offerElement.querySelector('.popup__text--capacity').textContent = `${rooms} комнаты для ${guests} гостей`;
-//   offerElement.querySelector('.popup__text--time').textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
-//   //checking features
-//   const featuresContainer = offerElement.querySelector('.popup__features');
-//   const featuresList = featuresContainer.querySelectorAll('.popup__feature');
-//   featuresList.forEach((featuresListItem) => {
-//     const included = features.some(
-//       (feature) => featuresListItem.classList.contains(`popup__feature--${feature}`),
-//     );
-//     if (!included) {
-//       featuresListItem.remove();
-//     }
-//   });
+  adItem.querySelector('.popup__title').textContent = title;
+  adItem.querySelector('.popup__text--address').textContent = address;
+  adItem.querySelector('.popup__text--price').textContent = `${price} ₽/ночь`;
+  adItem.querySelector('.popup__type').textContent = getLiv(type);
+  adItem.querySelector('.popup__text--capacity').textContent = `${rooms} комнаты для ${guests} гостей`;
+  adItem.querySelector('.popup__text--time').textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
+  //checking features
+  const featuresContainer = adItem.querySelector('.popup__features');
+  const featuresList = featuresContainer.querySelectorAll('.popup__feature');
+  featuresList.forEach((featuresListItem) => {
+    const included = features.some(
+      (feature) => featuresListItem.classList.contains(`popup__feature--${feature}`),
+    );
+    if (!included) {
+      featuresListItem.remove();
+    }
+  });
 
-//   offerElement.querySelector('.popup__description').textContent = description;
+  adItem.querySelector('.popup__description').textContent = description;
 
-//   //adding photos
-//   const photosContainer = offerElement.querySelector('.popup__photos');
-//   photosContainer.innerHTML = '';
-//   photos.forEach((photo) => {
-//     photosContainer.insertAdjacentHTML('beforeend', `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`);
-//   });
+  //adding photos
+  const photosContainer = adItem.querySelector('.popup__photos');
+  photosContainer.innerHTML = '';
+  photos.forEach((photo) => {
+    photosContainer.insertAdjacentHTML('beforeend', `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`);
+  });
 
-//   offerElement.querySelector('.popup__avatar').src = avatar;
+  adItem.querySelector('.popup__avatar').src = avatar;
 
-//   tempMapBlock.appendChild(offerElement);
-// });
+  tempMapBlock.appendChild(adItem);
+});
 
 
 //creating new offers BY JS TEMPLATE
