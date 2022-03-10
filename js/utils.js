@@ -41,22 +41,11 @@ const getImgNumber = (array, count) => {
   return (number <= count) ? `0${number}` : `${number}`;
 };
 
-const getLiv = (type) => {
-  switch (type) {
-    case 'flat':
-      return 'Квартира';
-    case 'bungalow':
-      return 'Бунгало';
-    case 'house':
-      return 'Дом';
-    case 'palace':
-      return 'Дворец';
-    case 'hotel':
-      return 'Отель';
-    default:
-      return 'жилье';
-  }
+export {
+  getRandomPositiveInteger,
+  getRandomPositiveFloat,
+  getRandomArrayElement,
+  getUniqueElementsArray,
+  getImgNumber,
+  getRandomMixedArray,
 };
-
-
-export { getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getUniqueElementsArray, getImgNumber, getRandomMixedArray, getLiv };

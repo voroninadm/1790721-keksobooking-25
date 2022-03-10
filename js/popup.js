@@ -1,28 +1,39 @@
-import { generateData } from './generate-data.js';
-import { getLiv } from './utils.js';
+import { TYPES_OF_HOUSING, generateData } from './generate-data.js';
 
-const tempMapBlock = document.querySelector('#map-canvas');
-const offerTemplate = document.querySelector('#card')
-  .content
-  .querySelector('.popup');
-
-const similarAds = generateData(1);
+const offerTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 //creating new ads BY HTML TEMPLATE
-
-similarAds.forEach((ad) => {
+const getPopup = (ad) => {
   const { title, address, price, type, rooms, guests, checkin, checkout, features, description, photos } = ad.offer;
   const { avatar } = ad.author;
 
   const adItem = offerTemplate.cloneNode(true);
 
-  adItem.querySelector('.popup__title').textContent = title;
-  adItem.querySelector('.popup__text--address').textContent = address;
-  adItem.querySelector('.popup__text--price').textContent = `${price} ₽/ночь`;
-  adItem.querySelector('.popup__type').textContent = getLiv(type);
-  adItem.querySelector('.popup__text--capacity').textContent = `${rooms} комнаты для ${guests} гостей`;
-  adItem.querySelector('.popup__text--time').textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
-  //checking features
+  adItem.querySelector('.popup__title').textContent = (title)
+    ? title
+    : adItem.querySelector('.popup__title').remove();
+  adItem.querySelector('.popup__text--address').textContent = (address)
+    ? address
+    : adItem.querySelector('.popup__text--address').remove();
+  adItem.querySelector('.popup__text--price').textContent = (price)
+    ? `${price} ₽/ночь`
+    : adItem.querySelector('.popup__text--price').remove();
+  adItem.querySelector('.popup__type').textContent = (type)
+    ? TYPES_OF_HOUSING[type]
+    : adItem.querySelector('.popup__type').remove();
+  adItem.querySelector('.popup__text--capacity').textContent = (rooms || guests)
+    ? `${rooms} комнаты для ${guests} гостей`
+    : adItem.querySelector('.popup__text--capacity').remove();
+  adItem.querySelector('.popup__text--time').textContent = (checkin || checkout)
+    ? `Заезд после ${checkin}, выезд до ${checkout}`
+    : adItem.querySelector('.popup__text--time').remove();
+  adItem.querySelector('.popup__description').textContent = (description)
+    ? description
+    : adItem.querySelector('.popup__description').remove();
+  adItem.querySelector('.popup__avatar').src = (avatar)
+    ? avatar
+    : adItem.querySelector('.popup__avatar').remove();
+
   const featuresContainer = adItem.querySelector('.popup__features');
   const featuresList = featuresContainer.querySelectorAll('.popup__feature');
   featuresList.forEach((featuresListItem) => {
@@ -34,43 +45,17 @@ similarAds.forEach((ad) => {
     }
   });
 
-  adItem.querySelector('.popup__description').textContent = description;
-
-  //adding photos
   const photosContainer = adItem.querySelector('.popup__photos');
   photosContainer.innerHTML = '';
   photos.forEach((photo) => {
     photosContainer.insertAdjacentHTML('beforeend', `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`);
   });
 
-  adItem.querySelector('.popup__avatar').src = avatar;
+  return adItem;
+};
 
-  tempMapBlock.appendChild(adItem);
-});
-
-
-//creating new offers BY JS TEMPLATE
-
-similarAds.forEach((ad) => {
-  const { title, address, price, type, rooms, guests, checkin, checkout, features, description, photos } = ad.offer;
-  const { avatar } = ad.author;
-  const adTemplate = `<article class="popup">
-      <img src="${avatar}" class="popup__avatar" width="70" height="70" alt="Аватар пользователя">
-      <h3 class="popup__title">${title}</h3>
-      <p class="popup__text popup__text--address">${address}</p>
-      <p class="popup__text popup__text--price">${price}₽/ночь</span></p>
-      <h4 class="popup__type">${getLiv(type)}</h4>
-      <p class="popup__text popup__text--capacity">${rooms} комнаты для ${guests} гостей</p>
-      <p class="popup__text popup__text--time">Заезд после ${checkin}, выезд до ${checkout}</p>
-      <ul class="popup__features">
-        <li class="popup__feature popup__feature--washer"></li>
-      </ul>
-      <p class="popup__description">${description}</p>
-      <div class="popup__photos">
-        <img src="" class="popup__photo" width="45" height="40" alt="Фотография жилья">
-      </div>
-    </article>`;
-  tempMapBlock.insertAdjacentHTML('beforeend', adTemplate);
-});
-
+// generating and rendering element for testing
+const tempMapBlock = document.querySelector('#map-canvas');
+const a = generateData(1);
+tempMapBlock.appendChild(getPopup(a[0]));
 

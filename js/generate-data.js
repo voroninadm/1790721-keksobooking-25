@@ -17,6 +17,13 @@ const TYPES = [
   'bungalow',
   'hotel'
 ];
+const TYPES_OF_HOUSING = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель',
+};
 const IN_OUT_TIMES = [
   '12:00',
   '13:00',
@@ -75,7 +82,10 @@ const createOffer = (array, count) => {
 
 const generateData = (count) => {
   const randomArray = getRandomMixedArray(1, count, count);
-  return Array.from({ length: count }, () => createOffer(randomArray,count));
+  return Array.from({ length: count }, () => createOffer(randomArray, count));
 };
 
-export { generateData };
+export {
+  TYPES_OF_HOUSING,
+  generateData
+};
