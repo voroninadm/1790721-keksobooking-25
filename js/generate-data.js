@@ -1,5 +1,18 @@
 import { getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getUniqueElementsArray, getImgNumber, getRandomMixedArray } from './utils.js';
 
+const AVATARS = [
+  'img/avatars/user01.png',
+  'img/avatars/user02.png',
+  'img/avatars/user03.png',
+  'img/avatars/user04.png',
+  'img/avatars/user05.png',
+  'img/avatars/user06.png',
+  'img/avatars/user07.png',
+  'img/avatars/user08.png',
+  'img/avatars/user09.png',
+  'img/avatars/user10.png',
+  'img/avatars/user11.png',
+];
 const TITLES = [
   'Просторное бунгало без интернета, регистрации и смс.',
   'Уютный чердачок с видом на реку.',
@@ -81,7 +94,7 @@ const createOffer = (array, count) => {
 };
 
 const generateData = (count) => {
-  const randomArray = getRandomMixedArray(1, count, count);
+  const randomArray = getRandomMixedArray(1, AVATARS.length, count);
   return Array.from({ length: count }, () => createOffer(randomArray, count));
 };
 
