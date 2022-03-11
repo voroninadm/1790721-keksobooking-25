@@ -61,17 +61,17 @@ const DESCRIPTIONS = [
   'Отель Гилман Хауз будет раз принять Вас в любое время суток. Только рыбные блюда в ресторане, свежайшая рыба с Рифа Дьявола. Мы гордимся, что за всю историю не получили ни одного отрицательного отзыва.'
 ];
 const PHOTOS = [
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+  'https://cdn.pixabay.com/photo/2013/11/27/09/49/iceland-219182_960_720.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-const createOffer = (array, count) => {
+const createOffer = (randomMixedPhotosArray, createCount) => {
   const lat = getRandomPositiveFloat(35.65000, 35.70000, 5);
   const lng = getRandomPositiveFloat(139.70000, 139.80000, 5);
   return {
     author: {
-      avatar: `img/avatars/user${getImgNumber(array, count)}.png`
+      avatar: `img/avatars/user${getImgNumber(randomMixedPhotosArray, createCount)}.png`
     },
     offer: {
       title: getRandomArrayElement(TITLES),
@@ -84,7 +84,7 @@ const createOffer = (array, count) => {
       checkout: getRandomArrayElement(IN_OUT_TIMES),
       features: getUniqueElementsArray(FEATURES),
       description: getRandomArrayElement(DESCRIPTIONS),
-      photos: getUniqueElementsArray(PHOTOS)
+      photos: getUniqueElementsArray(PHOTOS),
     },
     location: {
       lat: lat,
@@ -93,9 +93,9 @@ const createOffer = (array, count) => {
   };
 };
 
-const generateData = (count) => {
-  const randomArray = getRandomMixedArray(1, AVATARS.length, count);
-  return Array.from({ length: count }, () => createOffer(randomArray, count));
+const generateData = (countToGenerate) => {
+  const photosNumbersArray = getRandomMixedArray(1, AVATARS.length, countToGenerate);
+  return Array.from({ length: countToGenerate }, () => createOffer(photosNumbersArray, countToGenerate));
 };
 
 export {
