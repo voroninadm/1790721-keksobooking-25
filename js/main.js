@@ -1,3 +1,4 @@
-import {generateData} from './generate-data.js';
+import { generateData } from './generate-data.js';
+import './popup.js';
 
-generateData(10);
+console.log(generateData(10));

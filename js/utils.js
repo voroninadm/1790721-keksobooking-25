@@ -36,9 +36,16 @@ const getUniqueElementsArray = (array) => {
   return newArray;
 };
 
-const getImgNumber = (array, count) => {
+const getImgNumber = (array) => {
   const number = array.pop();
-  return (number < count) ? `0${number}`: `${number}`;
+  return (number < 10) ? `0${number}` : `${number}`;
 };
 
-export { getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getUniqueElementsArray, getImgNumber, getRandomMixedArray };
+export {
+  getRandomPositiveInteger,
+  getRandomPositiveFloat,
+  getRandomArrayElement,
+  getUniqueElementsArray,
+  getImgNumber,
+  getRandomMixedArray,
+};
