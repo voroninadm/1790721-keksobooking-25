@@ -1,9 +1,9 @@
 import { generateData } from './generate-data.js';
 import { getPopup } from './popup.js';
-import { switchToUnactive } from './form.js';
+import { switchFormsToDisabled } from './form.js';
 
 const tempMapBlock = document.querySelector('#map-canvas');
 const testPopup = generateData(1);
 tempMapBlock.appendChild(getPopup(testPopup[0]));
 
-switchToUnactive();
+switchFormsToDisabled(false);
