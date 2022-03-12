@@ -27,8 +27,8 @@ const getRandomMixedArray = (a, b, maxLength) => {
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
 const getUniqueElementsArray = (array) => {
-  const uniqueNumber = getRandomPositiveInteger(1, array.length - 1);
-  const arrayOfIndex = getRandomMixedArray(0, uniqueNumber, uniqueNumber);
+  const uniqueNumber = getRandomPositiveInteger(1, array.length);
+  const arrayOfIndex = getRandomMixedArray(0, uniqueNumber - 1, uniqueNumber);
   const newArray = [];
   arrayOfIndex.forEach((element) => {
     newArray.push(array[element]);

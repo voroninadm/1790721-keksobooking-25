@@ -1,38 +1,32 @@
-import { TYPES_OF_HOUSING, generateData } from './generate-data.js';
+import { TYPES_OF_HOUSING } from './generate-data.js';
 
 const offerTemplate = document.querySelector('#card').content.querySelector('.popup');
 
+const checkExsistValue = (templateElement, value) => (value) ? value : templateElement.remove();
+
 //creating new ads BY HTML TEMPLATE
 const getPopup = (ad) => {
-  const { title, address, price, type, rooms, guests, checkin, checkout, features, description, photos } = ad.offer;
-  const { avatar } = ad.author;
-
   const adItem = offerTemplate.cloneNode(true);
 
-  adItem.querySelector('.popup__title').textContent = (title)
-    ? title
-    : adItem.querySelector('.popup__title').remove();
-  adItem.querySelector('.popup__text--address').textContent = (address)
-    ? address
-    : adItem.querySelector('.popup__text--address').remove();
-  adItem.querySelector('.popup__text--price').textContent = (price)
-    ? `${price} ₽/ночь`
-    : adItem.querySelector('.popup__text--price').remove();
-  adItem.querySelector('.popup__type').textContent = (type)
-    ? TYPES_OF_HOUSING[type]
-    : adItem.querySelector('.popup__type').remove();
-  adItem.querySelector('.popup__text--capacity').textContent = (rooms || guests)
-    ? `${rooms} комнаты для ${guests} гостей`
-    : adItem.querySelector('.popup__text--capacity').remove();
-  adItem.querySelector('.popup__text--time').textContent = (checkin || checkout)
-    ? `Заезд после ${checkin}, выезд до ${checkout}`
-    : adItem.querySelector('.popup__text--time').remove();
-  adItem.querySelector('.popup__description').textContent = (description)
-    ? description
-    : adItem.querySelector('.popup__description').remove();
-  adItem.querySelector('.popup__avatar').src = (avatar)
-    ? avatar
-    : adItem.querySelector('.popup__avatar').remove();
+  const { title, address, price, type, rooms, guests, checkin, checkout, features, description, photos } = ad.offer;
+  const { avatar } = ad.author;
+  const templateTitle =  adItem.querySelector('.popup__title');
+  const templateAddress =  adItem.querySelector('.popup__text--address');
+  const templatePrice =  adItem.querySelector('.popup__text--price');
+  const templateType =  adItem.querySelector('.popup__type');
+  const templateCapacity =  adItem.querySelector('.popup__text--capacity');
+  const templateTime =  adItem.querySelector('.popup__text--time');
+  const templateDescription = adItem.querySelector('.popup__description');
+  const templateAvatar = adItem.querySelector('.popup__avatar');
+
+  templateTitle.textContent = checkExsistValue(templateTitle, title);
+  templateAddress.textContent = checkExsistValue(templateAddress, address);
+  templatePrice.textContent = checkExsistValue(templatePrice, `${price} ₽/ночь`);
+  templateType.textContent = checkExsistValue(templateType, TYPES_OF_HOUSING[type]);
+  templateCapacity.textContent = checkExsistValue(templateCapacity, `${rooms} комнаты для ${guests} гостей`);
+  templateTime.textContent = checkExsistValue(templateTime, `Заезд после ${checkin}, выезд до ${checkout}`);
+  templateDescription.textContent = checkExsistValue(templateDescription, description);
+  templateAvatar.src = checkExsistValue(templateAvatar, avatar);
 
   const featuresContainer = adItem.querySelector('.popup__features');
   const featuresList = featuresContainer.querySelectorAll('.popup__feature');
@@ -54,8 +48,4 @@ const getPopup = (ad) => {
   return adItem;
 };
 
-// generating and rendering element for testing
-const tempMapBlock = document.querySelector('#map-canvas');
-const a = generateData(1);
-tempMapBlock.appendChild(getPopup(a[0]));
-
+export {getPopup};
