@@ -66,12 +66,12 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-const createOffer = (randomMixedPhotosArray, createCount) => {
+const createOffer = (randomMixedArray, createCount) => {
   const lat = getRandomPositiveFloat(35.65000, 35.70000, 5);
   const lng = getRandomPositiveFloat(139.70000, 139.80000, 5);
   return {
     author: {
-      avatar: `img/avatars/user${getImgNumber(randomMixedPhotosArray, createCount)}.png`
+      avatar: `img/avatars/user${getImgNumber(randomMixedArray, createCount)}.png`
     },
     offer: {
       title: getRandomArrayElement(TITLES),
@@ -93,9 +93,9 @@ const createOffer = (randomMixedPhotosArray, createCount) => {
   };
 };
 
-const generateData = (countToGenerate) => {
-  const photosNumbersArray = getRandomMixedArray(1, AVATARS.length, countToGenerate);
-  return Array.from({ length: countToGenerate }, () => createOffer(photosNumbersArray, countToGenerate));
+const generateData = (count) => {
+  const photosNumbersArray = getRandomMixedArray(1, AVATARS.length, count);
+  return Array.from({ length: count }, () => createOffer(photosNumbersArray, count));
 };
 
 export {

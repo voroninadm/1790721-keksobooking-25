@@ -4,33 +4,21 @@ const mainFormFieldsets = mainForm.querySelectorAll('fieldset');
 const mainFormSlider = mainForm.querySelector('.ad-form__slider');
 const mapFiltersElements = mapFilters.querySelectorAll('select, fieldset');
 
-const doDisabledElements = (elements) => {
-  elements.forEach((element) => {
-    element.disabled = true;
-    element.children.disabled = true;
+const toggleFormToUnactive = (isActive) => {
+  mainForm.classList.toggle('ad-form--disabled', isActive);
+  mapFilters.classList.toggle('map__filters--disabled', isActive);
+  mainFormFieldsets.forEach((element) => {
+    element.disabled = isActive;
+    element.children.disabled = isActive;
+  });
+  mainFormSlider.forEach((element) => {
+    element.disabled = isActive;
+    element.children.disabled = isActive;
+  });
+  mapFiltersElements.forEach((element) => {
+    element.disabled = isActive;
+    element.children.disabled = isActive;
   });
 };
 
-const doEnabledElements = (elements) => {
-  elements.forEach((element) => {
-    element.disabled = false;
-    element.children.disabled = false;
-  });
-};
-
-const switchFormsToDisabled = (boolean) => {
-  if (boolean === true) {
-    mainForm.classList.add('ad-form--disabled');
-    mapFilters.classList.add('map__filters--disabled');
-    doDisabledElements(mapFiltersElements);
-    doDisabledElements(mainFormFieldsets);
-    doDisabledElements(mainFormSlider);
-  }
-  mainForm.classList.remove('ad-form--disabled');
-  mapFilters.classList.remove('map__filters--disabled');
-  doEnabledElements(mapFiltersElements);
-  doEnabledElements(mainFormFieldsets);
-  doEnabledElements(mainFormSlider);
-};
-
-export { switchFormsToDisabled };
+export { toggleFormToUnactive };
