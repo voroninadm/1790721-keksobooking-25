@@ -1028,3 +1028,25 @@ fieldset {
 .hidden {
   display: none;
 }
+
+//pristine.js styles
+
+.has-success .form-control {
+  border-bottom: 2px solid #168b3f;
+}
+
+.has-danger .form-control {
+  border-bottom: 2px solid #dc1d34;
+}
+
+.ad-form__element .text-help {
+  color: #dc1d34;
+}
+
+.inline-label label{
+  display: inline;
+}
+
+.pristine-error {
+  display: table;
+}

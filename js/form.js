@@ -11,14 +11,28 @@ const toggleFormToUnactive = (isActive) => {
     element.disabled = isActive;
     element.children.disabled = isActive;
   });
-  mainFormSlider.forEach((element) => {
-    element.disabled = isActive;
-    element.children.disabled = isActive;
-  });
+  mainFormSlider.classList.toggle('ad-form--disabled', isActive);
   mapFiltersElements.forEach((element) => {
     element.disabled = isActive;
     element.children.disabled = isActive;
   });
 };
+
+const title = mainForm.querySelector('.ad-form__title-input');
+const pristine = new Pristine(mainForm);
+
+
+pristine.addValidator(title, (value) => {
+  if (value.length >= 30 && value.length <= 100) {
+    return true;
+  }
+  return false;
+}, 'Заголовок должен быть не меньше 30 и не более 100 символов', 1, false);
+
+mainForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const valid = pristine.validate();
+});
+
 
 export { toggleFormToUnactive };
