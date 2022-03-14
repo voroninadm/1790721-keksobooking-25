@@ -1,4 +1,4 @@
-import {MIN_HOUSING_PRICES} from './generate-data.js';
+import { MIN_HOUSING_PRICES } from './generate-data.js';
 
 const mainForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -38,26 +38,49 @@ pristine.addValidator(mainForm.querySelector('[name="title"]'),
   validateTitle,
   'Заголовок должен быть не меньше 30 и не более 100 символов');
 
-//price for living validation
+//handler. synchronize type of houses and min price
 const priceField = mainForm.querySelector('[name="price"]');
 const typeOfHousesField = mainForm.querySelector('[name="type"]');
 
-function onLivingTypeChange () {
+function onLivingTypeChange() {
   priceField.placeholder = MIN_HOUSING_PRICES[this.value];
   pristine.validate(priceField);
 }
 typeOfHousesField.addEventListener('change', onLivingTypeChange);
 
-function validatePrice (value) {
+//price for living validation
+function validatePrice(value) {
   return value >= MIN_HOUSING_PRICES[typeOfHousesField.value] && value <= 100000;
 }
 
-function getPriceErrorMessage () {
+function getPriceErrorMessage() {
   return `Не менее ${MIN_HOUSING_PRICES[typeOfHousesField.value]} и не более 100 000`;
 }
 
 pristine.addValidator(priceField, validatePrice, getPriceErrorMessage);
 
+//handler. synchronize checkin and checkout
+const timeIn = mainForm.querySelector('[name="timein"]');
+const timeOut = mainForm.querySelector('[name="timeout"]');
+const timeOutParent = mainForm.querySelector('.ad-form__element--time');
+
+timeOutParent.addEventListener('change', (evt) => {
+  timeIn.value = timeOut.value = evt.target.value;
+});
+
+//synchronize rooms and capacity
+const rooms = mainForm.querySelector('[name="rooms"]');
+const capacity = mainForm.querySelector('[name="capacity"]');
+
+function validateCapacity (value) {
+  return value <= rooms.value && value !== 0;
+}
+
+function getCapacityErrorMessage() {
+  return '';
+}
+
+pristine.addValidator(capacity, validateCapacity, getCapacityErrorMessage);
 
 mainForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
