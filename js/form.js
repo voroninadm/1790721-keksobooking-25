@@ -1,3 +1,5 @@
+import {MIN_HOUSING_PRICES} from './generate-data.js';
+
 const mainForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
 const mainFormFieldsets = mainForm.querySelectorAll('fieldset');
@@ -18,20 +20,48 @@ const toggleFormToUnactive = (isActive) => {
   });
 };
 
-const title = mainForm.querySelector('.ad-form__title-input');
-const pristine = new Pristine(mainForm);
+const pristine = new Pristine(mainForm, {
+  classTo: 'ad-form__element',
+  errorClass: 'has-danger',
+  successClass: 'has-success',
+  errorTextParent: 'ad-form__element',
+  errorTextTag: 'span',
+  errorTextClass: 'text-help'
+});
 
+//title validation
+function validateTitle(value) {
+  return value.length >= 30 && value.length <= 100;
+}
 
-pristine.addValidator(title, (value) => {
-  if (value.length >= 30 && value.length <= 100) {
-    return true;
-  }
-  return false;
-}, 'Заголовок должен быть не меньше 30 и не более 100 символов', 1, false);
+pristine.addValidator(mainForm.querySelector('[name="title"]'),
+  validateTitle,
+  'Заголовок должен быть не меньше 30 и не более 100 символов');
+
+//price for living validation
+const priceField = mainForm.querySelector('[name="price"]');
+const typeOfHousesField = mainForm.querySelector('[name="type"]');
+
+function onLivingTypeChange () {
+  priceField.placeholder = MIN_HOUSING_PRICES[this.value];
+  pristine.validate(priceField);
+}
+typeOfHousesField.addEventListener('change', onLivingTypeChange);
+
+function validatePrice (value) {
+  return value >= MIN_HOUSING_PRICES[typeOfHousesField.value] && value <= 100000;
+}
+
+function getPriceErrorMessage () {
+  return `Не менее ${MIN_HOUSING_PRICES[typeOfHousesField.value]} и не более 100 000`;
+}
+
+pristine.addValidator(priceField, validatePrice, getPriceErrorMessage);
+
 
 mainForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const valid = pristine.validate();
+  pristine.validate();
 });
 
 

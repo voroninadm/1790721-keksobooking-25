@@ -1036,11 +1036,11 @@ fieldset {
 }
 
 .has-danger .form-control {
-  border-bottom: 2px solid #dc1d34;
+  border-bottom: 2px solid #dc1d33a2;
 }
 
 .ad-form__element .text-help {
-  color: #dc1d34;
+  color: #dc1d34;;
 }
 
 .inline-label label{
