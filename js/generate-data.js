@@ -44,6 +44,12 @@ const MIN_HOUSING_PRICES = {
   'house': 5000,
   'palace': 10000,
 };
+const ROOMS_CAPACITY = {
+  '1': ['1'],
+  '2': ['2', '1'],
+  '3': ['3', '2', '1'],
+  '100': ['0'],
+};
 const IN_OUT_TIMES = [
   '12:00',
   '13:00',
@@ -108,5 +114,6 @@ const generateData = (count) => {
 export {
   TYPES_OF_HOUSING,
   MIN_HOUSING_PRICES,
+  ROOMS_CAPACITY,
   generateData
 };

@@ -95,9 +95,9 @@
               объявление должно давать гостям полное представление о вашем жилье.</p>
           </div>
         </fieldset>
-        <fieldset class="ad-form__element ad-form__element--wide">
+        <fieldset class="ad-form__element ad-form__element--wide ad-form__element--validating">
             <label class="ad-form__label" for="title">Заголовок объявления</label>
-            <input class="form-control" id="title" name="title" type="text"
+            <input id="title" name="title" type="text"
               placeholder="Милая, уютная квартирка в центре Токио" required>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
@@ -114,7 +114,7 @@
             <option value="palace">Дворец</option>
           </select>
         </fieldset>
-        <fieldset class="ad-form__element">
+        <fieldset class="ad-form__element ad-form__element--validating">
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
           <input class="form-control" id="price" name="price" type="number" placeholder="5000" required>
           <div class="ad-form__slider"></div>
@@ -141,9 +141,9 @@
             <option value="100">100 комнат</option>
           </select>
         </fieldset>
-        <fieldset class="ad-form__element">
+        <fieldset class="ad-form__element ad-form__element--validating">
           <label class="ad-form__label" for="capacity">Количество мест</label>
-          <select id="capacity" name="capacity">
+          <select class="form-control" id="capacity" name="capacity">
             <option value="3" selected>для 3 гостей</option>
             <option value="2">для 2 гостей</option>
             <option value="1">для 1 гостя</option>

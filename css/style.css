@@ -1029,19 +1029,8 @@ fieldset {
   display: none;
 }
 
-//pristine.js styles
-
-.has-success .form-control {
-  border-bottom: 2px solid #168b3f;
-}
-
-.has-danger .form-control {
-  border-bottom: 2px solid #dc1d33a2;
-}
-
-.ad-form__element .text-help {
-  color: #dc1d34;;
-}
+/* Pristine.js styles
+   ========================================================================== */
 
 .inline-label label{
   display: inline;
@@ -1049,4 +1038,20 @@ fieldset {
 
 .pristine-error {
   display: table;
+}
+
+.ad-form__element--validating-success input,
+.ad-form__element--validating-success select {
+  background-color: #4f9c6a15;
+  border-color: green;
+}
+
+.ad-form__element--validating-danger input,
+.ad-form__element--validating-danger select {
+  background-color: #ff573505;
+  border-color: #ff5635;
+}
+
+.ad-form__element--validating-error {
+  color: #dc1d34;
 }

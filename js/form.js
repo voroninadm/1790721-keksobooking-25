@@ -1,4 +1,4 @@
-import { MIN_HOUSING_PRICES } from './generate-data.js';
+import { MIN_HOUSING_PRICES, ROOMS_CAPACITY } from './generate-data.js';
 
 const mainForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -20,25 +20,28 @@ const toggleFormToUnactive = (isActive) => {
   });
 };
 
+//FORM VALIDATING
 const pristine = new Pristine(mainForm, {
-  classTo: 'ad-form__element',
-  errorClass: 'has-danger',
-  successClass: 'has-success',
-  errorTextParent: 'ad-form__element',
+  classTo: 'ad-form__element--validating',
+  errorClass: 'ad-form__element--validating-danger',
+  successClass: 'ad-form__element--validating-success',
+  errorTextParent: 'ad-form__element--validating',
   errorTextTag: 'span',
-  errorTextClass: 'text-help'
+  errorTextClass: 'ad-form__element--validating-error'
 });
 
 //title validation
+
 function validateTitle(value) {
   return value.length >= 30 && value.length <= 100;
 }
 
 pristine.addValidator(mainForm.querySelector('[name="title"]'),
   validateTitle,
-  'Заголовок должен быть не меньше 30 и не более 100 символов');
+  'Заголовок должен быть не меньше 30 и не более 100 символов', 1, false);
 
 //handler. synchronize type of houses and min price
+
 const priceField = mainForm.querySelector('[name="price"]');
 const typeOfHousesField = mainForm.querySelector('[name="type"]');
 
@@ -49,6 +52,7 @@ function onLivingTypeChange() {
 typeOfHousesField.addEventListener('change', onLivingTypeChange);
 
 //price for living validation
+
 function validatePrice(value) {
   return value >= MIN_HOUSING_PRICES[typeOfHousesField.value] && value <= 100000;
 }
@@ -57,30 +61,32 @@ function getPriceErrorMessage() {
   return `Не менее ${MIN_HOUSING_PRICES[typeOfHousesField.value]} и не более 100 000`;
 }
 
-pristine.addValidator(priceField, validatePrice, getPriceErrorMessage);
+pristine.addValidator(priceField, validatePrice, getPriceErrorMessage, 1, false);
 
 //handler. synchronize checkin and checkout
+
 const timeIn = mainForm.querySelector('[name="timein"]');
 const timeOut = mainForm.querySelector('[name="timeout"]');
-const timeOutParent = mainForm.querySelector('.ad-form__element--time');
+const timeInOutParent = mainForm.querySelector('.ad-form__element--time');
 
-timeOutParent.addEventListener('change', (evt) => {
+timeInOutParent.addEventListener('change', (evt) => {
   timeIn.value = timeOut.value = evt.target.value;
 });
 
 //synchronize rooms and capacity
+
 const rooms = mainForm.querySelector('[name="rooms"]');
 const capacity = mainForm.querySelector('[name="capacity"]');
 
-function validateCapacity (value) {
-  return value <= rooms.value && value !== 0;
+function validateCapacity() {
+  return ROOMS_CAPACITY[rooms.value].includes(capacity.value);
 }
 
-function getCapacityErrorMessage() {
-  return '';
-}
+pristine.addValidator(capacity, validateCapacity, 'Пожалуйста, выберите верное количество гостей или комнат', 1, false);
 
-pristine.addValidator(capacity, validateCapacity, getCapacityErrorMessage);
+rooms.addEventListener('change', () => {
+  pristine.validate(capacity);
+});
 
 mainForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
