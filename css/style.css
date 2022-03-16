@@ -1028,3 +1028,30 @@ fieldset {
 .hidden {
   display: none;
 }
+
+/* Pristine.js styles
+   ========================================================================== */
+
+.inline-label label{
+  display: inline;
+}
+
+.pristine-error {
+  display: table;
+}
+
+.ad-form__element--validating-success input,
+.ad-form__element--validating-success select {
+  background-color: #4f9c6a15;
+  border-color: green;
+}
+
+.ad-form__element--validating-danger input,
+.ad-form__element--validating-danger select {
+  background-color: #ff573505;
+  border-color: #ff5635;
+}
+
+.ad-form__element--validating-error {
+  color: #dc1d34;
+}
