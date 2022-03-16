@@ -52,10 +52,10 @@ const formValidating = () => {
     priceField.placeholder = MIN_HOUSING_PRICES[this.value];
     pristine.validate(priceField);
   };
-  const validatePrice = (value) => value >= MIN_HOUSING_PRICES[typeOfHousesField.value] && value <= 100000;
   typeOfHousesField.addEventListener('change', onLivingTypeChange);
 
   //price for living validation
+  const validatePrice = (value) => value >= MIN_HOUSING_PRICES[typeOfHousesField.value] && value <= 100000;
   const getPriceErrorMessage = () => `Не менее ${MIN_HOUSING_PRICES[typeOfHousesField.value]} и не более 100 000`;
   pristine.addValidator(priceField, validatePrice, getPriceErrorMessage, 1, false);
 
