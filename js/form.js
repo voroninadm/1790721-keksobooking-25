@@ -1,4 +1,5 @@
 import { MIN_HOUSING_PRICES, ROOMS_CAPACITYS } from './generate-data.js';
+import './pristine-config-ru.js';
 
 const mainForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -74,8 +75,9 @@ const formValidating = () => {
 
   //handler. form validating on submit
   mainForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    pristine.validate();
+    if (!pristine.validate()) {
+      evt.preventDefault();
+    }
   });
 };
 
