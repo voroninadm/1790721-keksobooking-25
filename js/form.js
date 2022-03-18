@@ -42,12 +42,6 @@ const toggleFormToUnactive = (value) => {
 //=======FORM VALIDATING
 const formValidating = () => {
 
-  //title validation
-  const validateTitle = (value) => value.length >= 30 && value.length <= 100;
-  pristine.addValidator(mainForm.querySelector('[name="title"]'),
-    validateTitle,
-    'Заголовок должен быть не меньше 30 и не более 100 символов', 1, false);
-
   //handler. synchronize type of houses and min price
   const onLivingTypeChange = function () {
     priceField.placeholder = MIN_HOUSING_PRICES[this.value];
