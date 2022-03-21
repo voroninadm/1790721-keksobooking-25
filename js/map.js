@@ -45,7 +45,7 @@ L.tileLayer(
   },
 ).addTo(map);
 
-// map initialize function
+//=======MAP INITIALIZE
 const mapInit = (cb) => {
   map.on('load', () => {
     setTimeout(cb, 500);
@@ -82,7 +82,7 @@ const renderMarker = (object) => {
 };
 
 
-// handler
+// handler. on reset - !need to do!
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
