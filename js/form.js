@@ -1,6 +1,7 @@
 import { MIN_HOUSING_PRICES, ROOMS_CAPACITYS } from './generate-data.js';
 import './pristine-config-ru.js';
-import { sliderInit } from './slider.js';
+import { sliderInit, sliderReset } from './slider.js';
+import { mapReset } from './map.js';
 
 const mainForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -15,6 +16,8 @@ const timeOut = mainForm.querySelector('[name="timeout"]');
 const timeInOutParent = mainForm.querySelector('.ad-form__element--time');
 const rooms = mainForm.querySelector('[name="rooms"]');
 const capacity = mainForm.querySelector('[name="capacity"]');
+
+const resetButton = document.querySelector('[type="reset"]');
 
 const pristine = new Pristine(mainForm, {
   classTo: 'ad-form__element--validating',
@@ -78,7 +81,15 @@ const formValidating = () => {
       evt.preventDefault();
     }
   });
+
+  resetButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    mainForm.reset();
+    mapReset();
+    sliderReset();
+  });
 };
+
 
 const initForm = (isActive) => {
   toggleFormToUnactive(isActive);

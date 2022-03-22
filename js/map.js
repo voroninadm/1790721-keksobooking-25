@@ -2,7 +2,6 @@ import { generateData } from './generate-data.js';
 import { getPopup } from './popup.js';
 
 const latLngField = document.querySelector('[name="address"]');
-const resetButton = document.querySelector('[type="reset"]');
 
 const map = L.map('map-canvas');
 const markerGroup = L.layerGroup().addTo(map);
@@ -88,8 +87,7 @@ const mapInit = (cb) => {
 };
 
 // handler. on reset
-resetButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
+const mapReset = () => {
   latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
   mainPinMarker.setLatLng({
     lat: mainPinStartPosition.lat,
@@ -99,6 +97,6 @@ resetButton.addEventListener('click', (evt) => {
     lat: centerOfCity.lat,
     lng: centerOfCity.lng,
   }, MAP_START_ZOOM);
-});
+};
 
-export { mapInit };
+export { mapInit, mapReset };
