@@ -1,5 +1,6 @@
 import { MIN_HOUSING_PRICES, ROOMS_CAPACITYS } from './generate-data.js';
 import './pristine-config-ru.js';
+import { sliderInit } from './slider.js';
 
 const mainForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -37,6 +38,10 @@ const toggleFormToUnactive = (value) => {
     element.disabled = value;
     element.children.disabled = value;
   });
+  if (value) {
+    const validate = () => pristine.validate(priceField);
+    sliderInit(validate);
+  }
 };
 
 //=======FORM VALIDATING
@@ -47,7 +52,7 @@ const formValidating = () => {
     priceField.placeholder = MIN_HOUSING_PRICES[this.value];
     pristine.validate(priceField);
   };
-  typeOfHousesField.addEventListener('change', onLivingTypeChange);
+  typeOfHousesField.addEventListener('input', onLivingTypeChange);
 
   //price for living validation
   const validatePrice = (value) => value >= MIN_HOUSING_PRICES[typeOfHousesField.value] && value <= 100000;

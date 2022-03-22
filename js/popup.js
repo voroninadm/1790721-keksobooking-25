@@ -5,7 +5,7 @@ const offerTemplate = document.querySelector('#card').content.querySelector('.po
 const checkExsistValue = (templateElement, value) => (value) ? value : templateElement.remove();
 
 const roomsWord = (value) => {
-  if (value > 5 && value <= 20 || value % 10 >=5 && value % 10 <= 9 || value % 10 === 0) {
+  if (value > 5 && value <= 20 || value % 10 >= 5 && value % 10 <= 9 || value % 10 === 0) {
     return 'комнат';
   } else if (value % 10 >= 2 && value % 10 <= 4) {
     return 'комнаты';
@@ -58,5 +58,9 @@ const getPopup = (ad) => {
 
   return adItem;
 };
+
+// const renderPopups = (arrayOfObjects) => {
+//   arrayOfObjects.forEach((object) => getPopup(object));
+// };
 
 export { getPopup };
