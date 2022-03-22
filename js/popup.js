@@ -59,8 +59,4 @@ const getPopup = (ad) => {
   return adItem;
 };
 
-// const renderPopups = (arrayOfObjects) => {
-//   arrayOfObjects.forEach((object) => getPopup(object));
-// };
-
 export { getPopup };

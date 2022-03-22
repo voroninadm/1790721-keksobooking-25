@@ -1,3 +1,4 @@
+import { generateData } from './generate-data.js';
 import { getPopup } from './popup.js';
 
 const latLngField = document.querySelector('[name="address"]');
@@ -45,23 +46,6 @@ L.tileLayer(
   },
 ).addTo(map);
 
-//=======MAP INITIALIZE
-const mapInit = (cb) => {
-  map.on('load', () => {
-    setTimeout(cb, 500);
-    mainPinMarker.addTo(markerGroup);
-    latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
-    mainPinMarker.on('moveend', (evt) => {
-      const lat = evt.target.getLatLng().lat;
-      const lng = evt.target.getLatLng().lng;
-      latLngField.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-    });
-  })
-    .setView({
-      lat: centerOfCity.lat,
-      lng: centerOfCity.lng
-    }, MAP_START_ZOOM);
-};
 
 const renderMarker = (object) => {
   const lat = object.location.lat;
@@ -81,8 +65,29 @@ const renderMarker = (object) => {
     .bindPopup(getPopup(object));
 };
 
+//=======MAP INITIALIZE
+const mapInit = (cb) => {
+  map.on('load', () => {
+    setTimeout(cb, 500);
+    mainPinMarker.addTo(markerGroup);
+    latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
+    mainPinMarker.on('moveend', (evt) => {
+      const lat = evt.target.getLatLng().lat;
+      const lng = evt.target.getLatLng().lng;
+      latLngField.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+    });
+    const adsArray = generateData(10);
+    adsArray.forEach((ad) => {
+      renderMarker(ad);
+    });
+  })
+    .setView({
+      lat: centerOfCity.lat,
+      lng: centerOfCity.lng
+    }, MAP_START_ZOOM);
+};
 
-// handler. on reset - !need to do!
+// handler. on reset
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
@@ -96,4 +101,4 @@ resetButton.addEventListener('click', (evt) => {
   }, MAP_START_ZOOM);
 });
 
-export { mapInit, renderMarker };
+export { mapInit };
