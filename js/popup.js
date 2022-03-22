@@ -4,18 +4,27 @@ const offerTemplate = document.querySelector('#card').content.querySelector('.po
 
 const checkExsistValue = (templateElement, value) => (value) ? value : templateElement.remove();
 
+const roomsWord = (value) => {
+  if (value > 5 && value <= 20 || value % 10 >= 5 && value % 10 <= 9 || value % 10 === 0) {
+    return 'комнат';
+  } else if (value % 10 >= 2 && value % 10 <= 4) {
+    return 'комнаты';
+  }
+  return 'комната';
+};
+
 //creating new ads BY HTML TEMPLATE
 const getPopup = (ad) => {
   const adItem = offerTemplate.cloneNode(true);
 
   const { title, address, price, type, rooms, guests, checkin, checkout, features, description, photos } = ad.offer;
   const { avatar } = ad.author;
-  const templateTitle =  adItem.querySelector('.popup__title');
-  const templateAddress =  adItem.querySelector('.popup__text--address');
-  const templatePrice =  adItem.querySelector('.popup__text--price');
-  const templateType =  adItem.querySelector('.popup__type');
-  const templateCapacity =  adItem.querySelector('.popup__text--capacity');
-  const templateTime =  adItem.querySelector('.popup__text--time');
+  const templateTitle = adItem.querySelector('.popup__title');
+  const templateAddress = adItem.querySelector('.popup__text--address');
+  const templatePrice = adItem.querySelector('.popup__text--price');
+  const templateType = adItem.querySelector('.popup__type');
+  const templateCapacity = adItem.querySelector('.popup__text--capacity');
+  const templateTime = adItem.querySelector('.popup__text--time');
   const templateDescription = adItem.querySelector('.popup__description');
   const templateAvatar = adItem.querySelector('.popup__avatar');
 
@@ -23,7 +32,9 @@ const getPopup = (ad) => {
   templateAddress.textContent = checkExsistValue(templateAddress, address);
   templatePrice.textContent = checkExsistValue(templatePrice, `${price} ₽/ночь`);
   templateType.textContent = checkExsistValue(templateType, TYPES_OF_HOUSING[type]);
-  templateCapacity.textContent = checkExsistValue(templateCapacity, `${rooms} комнаты для ${guests} гостей`);
+  templateCapacity.textContent = checkExsistValue(templateCapacity,
+    `${rooms} ${roomsWord(rooms)} для
+    ${guests} ${(guests > 1) ? 'гостей' : 'гостя'}`);
   templateTime.textContent = checkExsistValue(templateTime, `Заезд после ${checkin}, выезд до ${checkout}`);
   templateDescription.textContent = checkExsistValue(templateDescription, description);
   templateAvatar.src = checkExsistValue(templateAvatar, avatar);
@@ -48,4 +59,8 @@ const getPopup = (ad) => {
   return adItem;
 };
 
-export {getPopup};
+// const renderPopups = (arrayOfObjects) => {
+//   arrayOfObjects.forEach((object) => getPopup(object));
+// };
+
+export { getPopup };

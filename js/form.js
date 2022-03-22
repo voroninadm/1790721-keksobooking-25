@@ -1,4 +1,6 @@
 import { MIN_HOUSING_PRICES, ROOMS_CAPACITYS } from './generate-data.js';
+import './pristine-config-ru.js';
+import { sliderInit } from './slider.js';
 
 const mainForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -36,23 +38,21 @@ const toggleFormToUnactive = (value) => {
     element.disabled = value;
     element.children.disabled = value;
   });
+  if (value) {
+    const validate = () => pristine.validate(priceField);
+    sliderInit(validate);
+  }
 };
 
 //=======FORM VALIDATING
 const formValidating = () => {
-
-  //title validation
-  const validateTitle = (value) => value.length >= 30 && value.length <= 100;
-  pristine.addValidator(mainForm.querySelector('[name="title"]'),
-    validateTitle,
-    'Заголовок должен быть не меньше 30 и не более 100 символов', 1, false);
 
   //handler. synchronize type of houses and min price
   const onLivingTypeChange = function () {
     priceField.placeholder = MIN_HOUSING_PRICES[this.value];
     pristine.validate(priceField);
   };
-  typeOfHousesField.addEventListener('change', onLivingTypeChange);
+  typeOfHousesField.addEventListener('input', onLivingTypeChange);
 
   //price for living validation
   const validatePrice = (value) => value >= MIN_HOUSING_PRICES[typeOfHousesField.value] && value <= 100000;
@@ -74,8 +74,9 @@ const formValidating = () => {
 
   //handler. form validating on submit
   mainForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    pristine.validate();
+    if (!pristine.validate()) {
+      evt.preventDefault();
+    }
   });
 };
 

@@ -1,10 +1,11 @@
 import { generateData } from './generate-data.js';
-import { getPopup } from './popup.js';
 import { initForm } from './form.js';
+import { mapInit, renderMarker} from './map.js';
 
+initForm(true);
+mapInit(initForm.bind(false));
 
-const tempMapBlock = document.querySelector('#map-canvas');
-const testPopup = generateData(1);
-tempMapBlock.appendChild(getPopup(testPopup[0]));
-
-initForm(false);
+const adsArray = generateData(10);
+adsArray.forEach((ad) => {
+  renderMarker(ad);
+});
