@@ -85,8 +85,10 @@ const formValidating = () => {
   resetButton.addEventListener('click', (evt) => {
     evt.preventDefault();
     mainForm.reset();
+    priceField.placeholder = '5000';
     mapReset();
     sliderReset();
+    pristine.reset();
   });
 };
 
