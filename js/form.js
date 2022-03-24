@@ -1,4 +1,4 @@
-import { MIN_HOUSING_PRICES, ROOMS_CAPACITYS } from './generate-data.js';
+import { offerTypeToPrice, ROOMS_CAPACITYS } from './generate-data.js';
 import './pristine-config-ru.js';
 import { sliderInit, sliderReset } from './slider.js';
 import { mapReset } from './map.js';
@@ -52,14 +52,16 @@ const formValidating = () => {
 
   //handler. synchronize type of houses and min price
   const onLivingTypeChange = function () {
-    priceField.placeholder = MIN_HOUSING_PRICES[this.value];
-    pristine.validate(priceField);
+    priceField.placeholder = offerTypeToPrice[this.value];
+    if (priceField.value) {
+      pristine.validate(priceField);
+    }
   };
   typeOfHousesField.addEventListener('input', onLivingTypeChange);
 
   //price for living validation
-  const validatePrice = (value) => value >= MIN_HOUSING_PRICES[typeOfHousesField.value] && value <= 100000;
-  const getPriceErrorMessage = () => `Не менее ${MIN_HOUSING_PRICES[typeOfHousesField.value]} и не более 100 000`;
+  const validatePrice = (value) => value >= offerTypeToPrice[typeOfHousesField.value] && value <= 100000;
+  const getPriceErrorMessage = () => `Не менее ${offerTypeToPrice[typeOfHousesField.value]} и не более 100 000`;
   pristine.addValidator(priceField, validatePrice, getPriceErrorMessage, 1, false);
 
   //handler. synchronize checkin and checkout

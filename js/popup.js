@@ -1,11 +1,13 @@
-import { TYPES_OF_HOUSING } from './generate-data.js';
+import { offerTypesToReadable } from './generate-data.js';
 
 const offerTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const checkExsistValue = (templateElement, value) => (value) ? value : templateElement.remove();
 
 const roomsWord = (value) => {
-  if (value > 5 && value <= 20 || value % 10 >= 5 && value % 10 <= 9 || value % 10 === 0) {
+  if (value > 5 && value <= 20 ||
+    value % 10 >= 5 && value % 10 <= 9 ||
+    value % 10 === 0) {
     return 'комнат';
   } else if (value % 10 >= 2 && value % 10 <= 4) {
     return 'комнаты';
@@ -31,7 +33,7 @@ const getPopup = (ad) => {
   templateTitle.textContent = checkExsistValue(templateTitle, title);
   templateAddress.textContent = checkExsistValue(templateAddress, address);
   templatePrice.textContent = checkExsistValue(templatePrice, `${price} ₽/ночь`);
-  templateType.textContent = checkExsistValue(templateType, TYPES_OF_HOUSING[type]);
+  templateType.textContent = checkExsistValue(templateType, offerTypesToReadable[type]); ///
   templateCapacity.textContent = checkExsistValue(templateCapacity,
     `${rooms} ${roomsWord(rooms)} для
     ${guests} ${(guests > 1) ? 'гостей' : 'гостя'}`);

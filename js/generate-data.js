@@ -1,4 +1,11 @@
-import { getRandomPositiveInteger, getRandomPositiveFloat, getRandomArrayElement, getUniqueElementsArray, getImgNumber, getRandomMixedArray } from './utils.js';
+import {
+  getRandomPositiveInteger,
+  getRandomPositiveFloat,
+  getRandomArrayElement,
+  getUniqueElementsArray,
+  getImgNumber,
+  getRandomMixedArray
+} from './utils.js';
 
 const AVATARS = [
   'img/avatars/user01.png',
@@ -23,27 +30,33 @@ const TITLES = [
   'Капсульный отель.',
   'Широко известный в узких кругах отель.'
 ];
-const TYPES = [
-  'palace',
-  'flat',
-  'house',
-  'bungalow',
-  'hotel'
-];
-const TYPES_OF_HOUSING = {
-  flat: 'Квартира',
-  bungalow: 'Бунгало',
-  house: 'Дом',
-  palace: 'Дворец',
-  hotel: 'Отель',
+
+const OfferType = {
+  PALACE: 'palace',
+  FLAT: 'flat',
+  HOUSE: 'house',
+  BUNGALOW: 'bungalow',
+  HOTEL: 'hotel'
 };
-const MIN_HOUSING_PRICES = {
-  'bungalow': 0,
-  'flat': 1000,
-  'hotel': 3000,
-  'house': 5000,
-  'palace': 10000,
+const offerTypes = Object.values(OfferType);
+
+const offerTypeToReadable = {
+  [OfferType.FLAT]: 'Квартира',
+  [OfferType.BUNGALOW]: 'Бунгало',
+  [OfferType.HOUSE]: 'Дом',
+  [OfferType.PALACE]: 'Дворец',
+  [OfferType.HOTEL]: 'Отель',
 };
+const offerTypesToReadable = Object.values(offerTypeToReadable);
+
+const offerTypeToPrice = {
+  [OfferType.PALACE]: 10000,
+  [OfferType.FLAT]: 1000,
+  [OfferType.BUNGALOW]: 0,
+  [OfferType.HOUSE]: 5000,
+  [OfferType.HOTEL]: 3000,
+};
+
 const ROOMS_CAPACITYS = {
   '1': ['1'],
   '2': ['2', '1'],
@@ -89,8 +102,8 @@ const createOffer = (randomMixedArray, createCount) => {
     offer: {
       title: getRandomArrayElement(TITLES),
       address: `${lat}, ${lng}`,
-      price: getRandomPositiveInteger(3000, 30000),
-      type: getRandomArrayElement(TYPES),
+      price: getRandomPositiveInteger(1, 30000),
+      type: getRandomArrayElement(offerTypes),
       rooms: getRandomPositiveInteger(1, 50),
       guests: getRandomPositiveInteger(1, 10),
       checkin: getRandomArrayElement(IN_OUT_TIMES),
@@ -112,8 +125,10 @@ const generateData = (count) => {
 };
 
 export {
-  TYPES_OF_HOUSING,
-  MIN_HOUSING_PRICES,
+  // TYPES_OF_HOUSING,
+  // MIN_HOUSING_PRICES,
+  offerTypesToReadable,
+  offerTypeToPrice,
   ROOMS_CAPACITYS,
   generateData
 };
