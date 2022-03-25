@@ -1,7 +1,7 @@
-import { offerTypeToPrice, ROOMS_CAPACITYS } from './generate-data.js';
+import { OfferTypeToPrice, ROOMS_CAPACITYS } from './generate-data.js';
 import './pristine-config-ru.js';
 import { sliderInit, sliderReset } from './slider.js';
-import { mapReset } from './map.js';
+import { mapReset, closePopup } from './map.js';
 
 const mainForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -41,6 +41,7 @@ const toggleFormToUnactive = (value) => {
     element.disabled = value;
     element.children.disabled = value;
   });
+  priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];
   if (value) {
     const validate = () => pristine.validate(priceField);
     sliderInit(validate);
@@ -52,7 +53,7 @@ const formValidating = () => {
 
   //handler. synchronize type of houses and min price
   const onLivingTypeChange = function () {
-    priceField.placeholder = offerTypeToPrice[this.value];
+    priceField.placeholder = OfferTypeToPrice[this.value];
     if (priceField.value) {
       pristine.validate(priceField);
     }
@@ -60,8 +61,8 @@ const formValidating = () => {
   typeOfHousesField.addEventListener('input', onLivingTypeChange);
 
   //price for living validation
-  const validatePrice = (value) => value >= offerTypeToPrice[typeOfHousesField.value] && value <= 100000;
-  const getPriceErrorMessage = () => `Не менее ${offerTypeToPrice[typeOfHousesField.value]} и не более 100 000`;
+  const validatePrice = (value) => value >= OfferTypeToPrice[typeOfHousesField.value] && value <= 100000;
+  const getPriceErrorMessage = () => `Не менее ${OfferTypeToPrice[typeOfHousesField.value]} и не более 100 000`;
   pristine.addValidator(priceField, validatePrice, getPriceErrorMessage, 1, false);
 
   //handler. synchronize checkin and checkout
@@ -87,10 +88,11 @@ const formValidating = () => {
   resetButton.addEventListener('click', (evt) => {
     evt.preventDefault();
     mainForm.reset();
-    priceField.placeholder = '5000';
+    priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];
     mapReset();
     sliderReset();
     pristine.reset();
+    closePopup();
   });
 };
 

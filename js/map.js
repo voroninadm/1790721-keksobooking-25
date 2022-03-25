@@ -86,6 +86,10 @@ const mapInit = (cb) => {
     }, MAP_START_ZOOM);
 };
 
+const closePopup = () => {
+  map.closePopup();
+};
+
 // handler. on reset
 const mapReset = () => {
   latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
@@ -99,4 +103,4 @@ const mapReset = () => {
   }, MAP_START_ZOOM);
 };
 
-export { mapInit, mapReset };
+export { mapInit, mapReset, closePopup };

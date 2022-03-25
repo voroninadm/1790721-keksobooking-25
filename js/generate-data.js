@@ -40,16 +40,16 @@ const OfferType = {
 };
 const offerTypes = Object.values(OfferType);
 
-const offerTypeToReadable = {
+const OfferTypeToReadable = {
   [OfferType.FLAT]: 'Квартира',
   [OfferType.BUNGALOW]: 'Бунгало',
   [OfferType.HOUSE]: 'Дом',
   [OfferType.PALACE]: 'Дворец',
   [OfferType.HOTEL]: 'Отель',
 };
-const offerTypesToReadable = Object.values(offerTypeToReadable);
+const offerTypesToReadable = Object.values(OfferTypeToReadable);
 
-const offerTypeToPrice = {
+const OfferTypeToPrice = {
   [OfferType.PALACE]: 10000,
   [OfferType.FLAT]: 1000,
   [OfferType.BUNGALOW]: 0,
@@ -128,7 +128,7 @@ export {
   // TYPES_OF_HOUSING,
   // MIN_HOUSING_PRICES,
   offerTypesToReadable,
-  offerTypeToPrice,
+  OfferTypeToPrice,
   ROOMS_CAPACITYS,
   generateData
 };
