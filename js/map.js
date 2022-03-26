@@ -87,8 +87,8 @@ const mapInit = (cb) => {
     }, MAP_START_ZOOM);
 };
 
-//=======CLOSE POPUP
-const closePopup = () => {
+//=======CLOSE MAP POPUP
+const closeMapPopup = () => {
   map.closePopup();
 };
 
@@ -105,4 +105,4 @@ const mapReset = () => {
   }, MAP_START_ZOOM);
 };
 
-export { mapInit, mapReset, closePopup, renderMarkers };
+export { mapInit, mapReset, closeMapPopup, renderMarkers };

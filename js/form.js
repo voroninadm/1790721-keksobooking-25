@@ -1,7 +1,7 @@
 import './pristine-config-ru.js';
 import { OfferTypeToPrice, ROOMS_CAPACITYS } from './generate-data.js';
 import { sliderInit, sliderReset } from './slider.js';
-import { mapReset, closePopup } from './map.js';
+import { mapReset, closeMapPopup } from './map.js';
 import { sendData } from './ajax.js';
 
 const mainForm = document.querySelector('.ad-form');
@@ -78,32 +78,32 @@ const formValidating = () => {
   rooms.addEventListener('change', () => {
     pristine.validate(capacity);
   });
-
-  //handler. form validating on submit
-  mainForm.addEventListener('submit', (evt) => {
-    if (!pristine.validate()) {
-      evt.preventDefault();
-    }
-  });
 };
 
-//ON SUBMIT
-mainForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  formValidating();
-  const formData = new FormData(evt.target);
-  sendData(formData);
-  console.log('error');
-});
-
-resetButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
+const resetFormToDefault = () => {
   mainForm.reset();
   priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];
   mapReset();
   sliderReset();
   pristine.reset();
-  closePopup();
+  closeMapPopup();
+};
+
+//handler. form validating on submit
+mainForm.addEventListener('submit', (evt) => {
+  if (!pristine.validate()) {
+    evt.preventDefault();
+  } else {
+    evt.preventDefault();
+    const formData = new FormData(evt.target);
+    sendData(formData);
+  }
+});
+
+// handler. reset button
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetFormToDefault();
 });
 
 const initForm = (isActive) => {
@@ -114,4 +114,4 @@ const initForm = (isActive) => {
 };
 
 
-export { initForm };
+export { initForm, resetFormToDefault };
