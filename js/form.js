@@ -1,7 +1,8 @@
-import { OfferTypeToPrice, ROOMS_CAPACITYS } from './generate-data.js';
 import './pristine-config-ru.js';
+import { OfferTypeToPrice, ROOMS_CAPACITYS } from './generate-data.js';
 import { sliderInit, sliderReset } from './slider.js';
 import { mapReset, closePopup } from './map.js';
+import { sendData } from './ajax.js';
 
 const mainForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -84,18 +85,26 @@ const formValidating = () => {
       evt.preventDefault();
     }
   });
-
-  resetButton.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    mainForm.reset();
-    priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];
-    mapReset();
-    sliderReset();
-    pristine.reset();
-    closePopup();
-  });
 };
 
+//ON SUBMIT
+mainForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  formValidating();
+  const formData = new FormData(evt.target);
+  sendData(formData);
+  console.log('error');
+});
+
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  mainForm.reset();
+  priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];
+  mapReset();
+  sliderReset();
+  pristine.reset();
+  closePopup();
+});
 
 const initForm = (isActive) => {
   toggleFormToUnactive(isActive);

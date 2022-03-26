@@ -1,6 +1,4 @@
-
 import { getPopup } from './popup.js';
-import { getData } from './ajax.js';
 
 const latLngField = document.querySelector('[name="address"]');
 
@@ -70,6 +68,7 @@ const renderMarkers = (array) => {
     renderMarker(element);
   });
 };
+
 //=======MAP INITIALIZE
 const mapInit = (cb) => {
   map.on('load', () => {
@@ -81,7 +80,6 @@ const mapInit = (cb) => {
       const lng = evt.target.getLatLng().lng;
       latLngField.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
     });
-    getData(renderMarkers); //from ajax
   })
     .setView({
       lat: centerOfCity.lat,
@@ -89,11 +87,12 @@ const mapInit = (cb) => {
     }, MAP_START_ZOOM);
 };
 
+//=======CLOSE POPUP
 const closePopup = () => {
   map.closePopup();
 };
 
-// handler. on reset
+// map reset to default
 const mapReset = () => {
   latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
   mainPinMarker.setLatLng({
