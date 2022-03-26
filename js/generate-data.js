@@ -47,7 +47,6 @@ const OfferTypeToReadable = {
   [OfferType.PALACE]: 'Дворец',
   [OfferType.HOTEL]: 'Отель',
 };
-const offerTypesToReadable = Object.values(OfferTypeToReadable);
 
 const OfferTypeToPrice = {
   [OfferType.PALACE]: 10000,
@@ -125,9 +124,7 @@ const generateData = (count) => {
 };
 
 export {
-  // TYPES_OF_HOUSING,
-  // MIN_HOUSING_PRICES,
-  offerTypesToReadable,
+  OfferTypeToReadable,
   OfferTypeToPrice,
   ROOMS_CAPACITYS,
   generateData

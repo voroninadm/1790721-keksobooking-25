@@ -1,5 +1,6 @@
-import { generateData } from './generate-data.js';
+
 import { getPopup } from './popup.js';
+import { getData } from './ajax.js';
 
 const latLngField = document.querySelector('[name="address"]');
 
@@ -64,6 +65,11 @@ const renderMarker = (object) => {
     .bindPopup(getPopup(object));
 };
 
+const renderMarkers = (array) => {
+  array.forEach((element) => {
+    renderMarker(element);
+  });
+};
 //=======MAP INITIALIZE
 const mapInit = (cb) => {
   map.on('load', () => {
@@ -75,10 +81,7 @@ const mapInit = (cb) => {
       const lng = evt.target.getLatLng().lng;
       latLngField.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
     });
-    const adsArray = generateData(10);
-    adsArray.forEach((ad) => {
-      renderMarker(ad);
-    });
+    getData(renderMarkers); //from ajax
   })
     .setView({
       lat: centerOfCity.lat,
@@ -103,4 +106,4 @@ const mapReset = () => {
   }, MAP_START_ZOOM);
 };
 
-export { mapInit, mapReset, closePopup };
+export { mapInit, mapReset, closePopup, renderMarkers };

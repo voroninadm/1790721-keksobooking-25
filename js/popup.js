@@ -1,4 +1,4 @@
-import { offerTypesToReadable } from './generate-data.js';
+import { OfferTypeToReadable } from './generate-data.js';
 
 const offerTemplate = document.querySelector('#card').content.querySelector('.popup');
 
@@ -33,7 +33,7 @@ const getPopup = (ad) => {
   templateTitle.textContent = checkExsistValue(templateTitle, title);
   templateAddress.textContent = checkExsistValue(templateAddress, address);
   templatePrice.textContent = checkExsistValue(templatePrice, `${price} ₽/ночь`);
-  templateType.textContent = checkExsistValue(templateType, offerTypesToReadable[type]); ///
+  templateType.textContent = checkExsistValue(templateType, OfferTypeToReadable[type]); ///
   templateCapacity.textContent = checkExsistValue(templateCapacity,
     `${rooms} ${roomsWord(rooms)} для
     ${guests} ${(guests > 1) ? 'гостей' : 'гостя'}`);
@@ -42,22 +42,28 @@ const getPopup = (ad) => {
   templateAvatar.src = checkExsistValue(templateAvatar, avatar);
 
   const featuresContainer = adItem.querySelector('.popup__features');
-  const featuresList = featuresContainer.querySelectorAll('.popup__feature');
-  featuresList.forEach((featuresListItem) => {
-    const included = features.some(
-      (feature) => featuresListItem.classList.contains(`popup__feature--${feature}`),
-    );
-    if (!included) {
-      featuresListItem.remove();
-    }
-  });
-
+  if (features) {
+    const featuresList = featuresContainer.querySelectorAll('.popup__feature');
+    featuresList.forEach((featuresListItem) => {
+      const included = features.some(
+        (feature) => featuresListItem.classList.contains(`popup__feature--${feature}`),
+      );
+      if (!included) {
+        featuresListItem.remove();
+      }
+    });
+  } else {
+    featuresContainer.remove();
+  }
   const photosContainer = adItem.querySelector('.popup__photos');
-  photosContainer.innerHTML = '';
-  photos.forEach((photo) => {
-    photosContainer.insertAdjacentHTML('beforeend', `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`);
-  });
-
+  if (photos) {
+    photosContainer.innerHTML = '';
+    photos.forEach((photo) => {
+      photosContainer.insertAdjacentHTML('beforeend', `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`);
+    });
+  } else {
+    photosContainer.remove();
+  }
   return adItem;
 };
 
