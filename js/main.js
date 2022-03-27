@@ -12,3 +12,4 @@ const COUNT_OF_ADS = 3;
 getData((ads) => {
   renderMarkers(ads.slice(0, COUNT_OF_ADS));
 });
+

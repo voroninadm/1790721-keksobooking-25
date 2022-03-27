@@ -1,5 +1,5 @@
 import { showAlert } from './utils.js';
-import { successMessage, errorMessage } from './form-messages.js';
+import { successMessagePopup, errorMessagePopup } from './form-messages.js';
 
 const getData = (cb) => {
   fetch('https://25.javascript.pages.academy/keksobooking/data')
@@ -20,13 +20,13 @@ const sendData = (data) => {
   )
     .then((response) => {
       if (response.ok) {
-        successMessage();
+        successMessagePopup();
       } else {
-        errorMessage('Не удалось отправить форму. Попробуйте ещё раз');
+        errorMessagePopup('Не удалось отправить форму. Попробуйте ещё раз');
       }
     })
     .catch(() => {
-      errorMessage('Не удалось отправить форму. Попробуйте ещё раз');
+      errorMessagePopup('Не удалось отправить форму. Попробуйте ещё раз');
     });
 };
 

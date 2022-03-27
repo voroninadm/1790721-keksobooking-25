@@ -92,7 +92,7 @@ const closeMapPopup = () => {
   map.closePopup();
 };
 
-// map reset to default
+//=======RESET MAP TO DEFAULT
 const mapReset = () => {
   latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
   mainPinMarker.setLatLng({

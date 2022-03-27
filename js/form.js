@@ -80,6 +80,15 @@ const formValidating = () => {
   });
 };
 
+//=======FORM INITIALIZATION
+const initForm = (isActive) => {
+  toggleFormToUnactive(isActive);
+  if (!isActive) {
+    formValidating();
+  }
+};
+
+//========RESET FORM TO DEFAULT
 const resetFormToDefault = () => {
   mainForm.reset();
   priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];
@@ -105,13 +114,6 @@ resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetFormToDefault();
 });
-
-const initForm = (isActive) => {
-  toggleFormToUnactive(isActive);
-  if (!isActive) {
-    formValidating();
-  }
-};
 
 
 export { initForm, resetFormToDefault };

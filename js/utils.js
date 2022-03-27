@@ -57,11 +57,10 @@ const showAlert = (message) => {
   alertContainer.textContent = message;
 
   document.body.append(alertContainer);
-
-  setTimeout(() => {
-    alertContainer.remove();
-  }, 4000);
 };
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
 
 export {
   getRandomPositiveInteger,
@@ -70,5 +69,6 @@ export {
   getUniqueElementsArray,
   getImgNumber,
   getRandomMixedArray,
-  showAlert
+  showAlert,
+  isEscapeKey
 };
