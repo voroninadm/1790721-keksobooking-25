@@ -19,7 +19,7 @@ const rooms = mainForm.querySelector('[name="rooms"]');
 const capacity = mainForm.querySelector('[name="capacity"]');
 
 const resetButton = mainForm.querySelector('[type="reset"]');
-const submitButton = mainForm.querySelector('[type="submot"]');
+const submitButton = mainForm.querySelector('[type="submit"]');
 
 const pristine = new Pristine(mainForm, {
   classTo: 'ad-form__element--validating',
@@ -30,19 +30,23 @@ const pristine = new Pristine(mainForm, {
   errorTextClass: 'ad-form__element--validating-error'
 });
 
+const toggleMapFiltersToUnactive = (value) => {
+  mapFilters.classList.toggle('map__filters--disabled', value);
+  mapFiltersElements.forEach((element) => {
+    element.disabled = value;
+    element.children.disabled = value;
+  });
+};
+
 //=======FORM DISABLING-ACTIVATING
 const toggleFormToUnactive = (value) => {
   mainForm.classList.toggle('ad-form--disabled', value);
-  mapFilters.classList.toggle('map__filters--disabled', value);
+  toggleMapFiltersToUnactive(true);
   mainFormFieldsets.forEach((element) => {
     element.disabled = value;
     element.children.disabled = value;
   });
   mainFormSlider.classList.toggle('ad-form--disabled', value);
-  mapFiltersElements.forEach((element) => {
-    element.disabled = value;
-    element.children.disabled = value;
-  });
   priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];
   if (value) {
     const validate = () => pristine.validate(priceField);
@@ -99,14 +103,25 @@ const resetFormToDefault = () => {
   closeMapPopup();
 };
 
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Публикую...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
 //handler. form validating on submit
 mainForm.addEventListener('submit', (evt) => {
   if (!pristine.validate()) {
     evt.preventDefault();
   } else {
     evt.preventDefault();
+    blockSubmitButton();
     const formData = new FormData(evt.target);
-    sendData(formData);
+    sendData(formData, unblockSubmitButton);
   }
 });
 

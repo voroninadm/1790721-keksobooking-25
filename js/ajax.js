@@ -10,7 +10,7 @@ const getData = (cb) => {
     });
 };
 
-const sendData = (data) => {
+const sendData = (data, unblockButton) => {
   fetch(
     'https://25.javascript.pages.academy/keksobooking',
     {
@@ -21,12 +21,14 @@ const sendData = (data) => {
     .then((response) => {
       if (response.ok) {
         successMessagePopup();
+        unblockButton();
       } else {
         errorMessagePopup('Не удалось отправить форму. Попробуйте ещё раз');
       }
     })
     .catch(() => {
       errorMessagePopup('Не удалось отправить форму. Попробуйте ещё раз');
+      unblockButton();
     });
 };
 
