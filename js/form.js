@@ -18,7 +18,8 @@ const timeInOutParent = mainForm.querySelector('.ad-form__element--time');
 const rooms = mainForm.querySelector('[name="rooms"]');
 const capacity = mainForm.querySelector('[name="capacity"]');
 
-const resetButton = document.querySelector('[type="reset"]');
+const resetButton = mainForm.querySelector('[type="reset"]');
+const submitButton = mainForm.querySelector('[type="submot"]');
 
 const pristine = new Pristine(mainForm, {
   classTo: 'ad-form__element--validating',
