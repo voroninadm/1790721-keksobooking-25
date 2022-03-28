@@ -1,11 +1,13 @@
-import { TYPES_OF_HOUSING } from './generate-data.js';
+import { OfferTypeToReadable } from './generate-data.js';
 
 const offerTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const checkExsistValue = (templateElement, value) => (value) ? value : templateElement.remove();
 
 const roomsWord = (value) => {
-  if (value > 5 && value <= 20 || value % 10 >= 5 && value % 10 <= 9 || value % 10 === 0) {
+  if (value > 5 && value <= 20 ||
+    value % 10 >= 5 && value % 10 <= 9 ||
+    value % 10 === 0) {
     return 'комнат';
   } else if (value % 10 >= 2 && value % 10 <= 4) {
     return 'комнаты';
@@ -31,7 +33,7 @@ const getPopup = (ad) => {
   templateTitle.textContent = checkExsistValue(templateTitle, title);
   templateAddress.textContent = checkExsistValue(templateAddress, address);
   templatePrice.textContent = checkExsistValue(templatePrice, `${price} ₽/ночь`);
-  templateType.textContent = checkExsistValue(templateType, TYPES_OF_HOUSING[type]);
+  templateType.textContent = checkExsistValue(templateType, OfferTypeToReadable[type]); ///
   templateCapacity.textContent = checkExsistValue(templateCapacity,
     `${rooms} ${roomsWord(rooms)} для
     ${guests} ${(guests > 1) ? 'гостей' : 'гостя'}`);
@@ -40,27 +42,29 @@ const getPopup = (ad) => {
   templateAvatar.src = checkExsistValue(templateAvatar, avatar);
 
   const featuresContainer = adItem.querySelector('.popup__features');
-  const featuresList = featuresContainer.querySelectorAll('.popup__feature');
-  featuresList.forEach((featuresListItem) => {
-    const included = features.some(
-      (feature) => featuresListItem.classList.contains(`popup__feature--${feature}`),
-    );
-    if (!included) {
-      featuresListItem.remove();
-    }
-  });
-
+  if (features) {
+    const featuresList = featuresContainer.querySelectorAll('.popup__feature');
+    featuresList.forEach((featuresListItem) => {
+      const included = features.some(
+        (feature) => featuresListItem.classList.contains(`popup__feature--${feature}`),
+      );
+      if (!included) {
+        featuresListItem.remove();
+      }
+    });
+  } else {
+    featuresContainer.remove();
+  }
   const photosContainer = adItem.querySelector('.popup__photos');
-  photosContainer.innerHTML = '';
-  photos.forEach((photo) => {
-    photosContainer.insertAdjacentHTML('beforeend', `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`);
-  });
-
+  if (photos) {
+    photosContainer.innerHTML = '';
+    photos.forEach((photo) => {
+      photosContainer.insertAdjacentHTML('beforeend', `<img src="${photo}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`);
+    });
+  } else {
+    photosContainer.remove();
+  }
   return adItem;
 };
-
-// const renderPopups = (arrayOfObjects) => {
-//   arrayOfObjects.forEach((object) => getPopup(object));
-// };
 
 export { getPopup };

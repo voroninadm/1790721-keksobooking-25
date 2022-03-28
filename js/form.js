@@ -1,6 +1,8 @@
-import { MIN_HOUSING_PRICES, ROOMS_CAPACITYS } from './generate-data.js';
 import './pristine-config-ru.js';
-import { sliderInit } from './slider.js';
+import { OfferTypeToPrice, ROOMS_CAPACITYS } from './generate-data.js';
+import { sliderInit, sliderReset } from './slider.js';
+import { mapReset, closeMapPopup } from './map.js';
+import { sendData } from './ajax.js';
 
 const mainForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -15,6 +17,8 @@ const timeOut = mainForm.querySelector('[name="timeout"]');
 const timeInOutParent = mainForm.querySelector('.ad-form__element--time');
 const rooms = mainForm.querySelector('[name="rooms"]');
 const capacity = mainForm.querySelector('[name="capacity"]');
+
+const resetButton = document.querySelector('[type="reset"]');
 
 const pristine = new Pristine(mainForm, {
   classTo: 'ad-form__element--validating',
@@ -38,6 +42,7 @@ const toggleFormToUnactive = (value) => {
     element.disabled = value;
     element.children.disabled = value;
   });
+  priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];
   if (value) {
     const validate = () => pristine.validate(priceField);
     sliderInit(validate);
@@ -49,14 +54,16 @@ const formValidating = () => {
 
   //handler. synchronize type of houses and min price
   const onLivingTypeChange = function () {
-    priceField.placeholder = MIN_HOUSING_PRICES[this.value];
-    pristine.validate(priceField);
+    priceField.placeholder = OfferTypeToPrice[this.value];
+    if (priceField.value) {
+      pristine.validate(priceField);
+    }
   };
   typeOfHousesField.addEventListener('input', onLivingTypeChange);
 
   //price for living validation
-  const validatePrice = (value) => value >= MIN_HOUSING_PRICES[typeOfHousesField.value] && value <= 100000;
-  const getPriceErrorMessage = () => `Не менее ${MIN_HOUSING_PRICES[typeOfHousesField.value]} и не более 100 000`;
+  const validatePrice = (value) => value >= OfferTypeToPrice[typeOfHousesField.value] && value <= 100000;
+  const getPriceErrorMessage = () => `Не менее ${OfferTypeToPrice[typeOfHousesField.value]} и не более 100 000`;
   pristine.addValidator(priceField, validatePrice, getPriceErrorMessage, 1, false);
 
   //handler. synchronize checkin and checkout
@@ -71,15 +78,9 @@ const formValidating = () => {
   rooms.addEventListener('change', () => {
     pristine.validate(capacity);
   });
-
-  //handler. form validating on submit
-  mainForm.addEventListener('submit', (evt) => {
-    if (!pristine.validate()) {
-      evt.preventDefault();
-    }
-  });
 };
 
+//=======FORM INITIALIZATION
 const initForm = (isActive) => {
   toggleFormToUnactive(isActive);
   if (!isActive) {
@@ -87,5 +88,32 @@ const initForm = (isActive) => {
   }
 };
 
+//========RESET FORM TO DEFAULT
+const resetFormToDefault = () => {
+  mainForm.reset();
+  priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];
+  mapReset();
+  sliderReset();
+  pristine.reset();
+  closeMapPopup();
+};
 
-export { initForm };
+//handler. form validating on submit
+mainForm.addEventListener('submit', (evt) => {
+  if (!pristine.validate()) {
+    evt.preventDefault();
+  } else {
+    evt.preventDefault();
+    const formData = new FormData(evt.target);
+    sendData(formData);
+  }
+});
+
+// handler. reset button
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetFormToDefault();
+});
+
+
+export { initForm, resetFormToDefault };

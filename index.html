@@ -5,8 +5,8 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="/leaflet/leaflet.css" />
-  <link rel="stylesheet" href="/nouislider/nouislider.css" />
+  <link rel="stylesheet" href="leaflet/leaflet.css" />
+  <link rel="stylesheet" href="nouislider/nouislider.css" />
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>Кексобукинг</title>
 </head>
@@ -118,7 +118,7 @@
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--validating">
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
-          <input class="form-control" id="price" name="price" type="number" placeholder="5000" required>
+          <input class="form-control" id="price" name="price" type="number" placeholder="" required>
           <div class="ad-form__slider"></div>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--time">
@@ -146,9 +146,9 @@
         <fieldset class="ad-form__element ad-form__element--validating">
           <label class="ad-form__label" for="capacity">Количество мест</label>
           <select class="form-control" id="capacity" name="capacity">
-            <option value="3" selected>для 3 гостей</option>
+            <option value="3">для 3 гостей</option>
             <option value="2">для 2 гостей</option>
-            <option value="1">для 1 гостя</option>
+            <option value="1" selected >для 1 гостя</option>
             <option value="0">не для гостей</option>
           </select>
         </fieldset>

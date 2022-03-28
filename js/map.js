@@ -1,7 +1,6 @@
 import { getPopup } from './popup.js';
 
 const latLngField = document.querySelector('[name="address"]');
-const resetButton = document.querySelector('[type="reset"]');
 
 const map = L.map('map-canvas');
 const markerGroup = L.layerGroup().addTo(map);
@@ -45,23 +44,6 @@ L.tileLayer(
   },
 ).addTo(map);
 
-//=======MAP INITIALIZE
-const mapInit = (cb) => {
-  map.on('load', () => {
-    setTimeout(cb, 500);
-    mainPinMarker.addTo(markerGroup);
-    latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
-    mainPinMarker.on('moveend', (evt) => {
-      const lat = evt.target.getLatLng().lat;
-      const lng = evt.target.getLatLng().lng;
-      latLngField.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-    });
-  })
-    .setView({
-      lat: centerOfCity.lat,
-      lng: centerOfCity.lng
-    }, MAP_START_ZOOM);
-};
 
 const renderMarker = (object) => {
   const lat = object.location.lat;
@@ -81,10 +63,37 @@ const renderMarker = (object) => {
     .bindPopup(getPopup(object));
 };
 
+const renderMarkers = (array) => {
+  array.forEach((element) => {
+    renderMarker(element);
+  });
+};
 
-// handler. on reset - !need to do!
-resetButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
+//=======MAP INITIALIZE
+const mapInit = (cb) => {
+  map.on('load', () => {
+    setTimeout(cb, 500);
+    mainPinMarker.addTo(markerGroup);
+    latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
+    mainPinMarker.on('moveend', (evt) => {
+      const lat = evt.target.getLatLng().lat;
+      const lng = evt.target.getLatLng().lng;
+      latLngField.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+    });
+  })
+    .setView({
+      lat: centerOfCity.lat,
+      lng: centerOfCity.lng
+    }, MAP_START_ZOOM);
+};
+
+//=======CLOSE MAP POPUP
+const closeMapPopup = () => {
+  map.closePopup();
+};
+
+//=======RESET MAP TO DEFAULT
+const mapReset = () => {
   latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
   mainPinMarker.setLatLng({
     lat: mainPinStartPosition.lat,
@@ -94,6 +103,6 @@ resetButton.addEventListener('click', (evt) => {
     lat: centerOfCity.lat,
     lng: centerOfCity.lng,
   }, MAP_START_ZOOM);
-});
+};
 
-export { mapInit, renderMarker };
+export { mapInit, mapReset, closeMapPopup, renderMarkers };
