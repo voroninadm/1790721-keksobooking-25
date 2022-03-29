@@ -41,7 +41,7 @@ const toggleMapFiltersToUnactive = (value) => {
 //=======FORM DISABLING-ACTIVATING
 const toggleFormToUnactive = (value) => {
   mainForm.classList.toggle('ad-form--disabled', value);
-  toggleMapFiltersToUnactive(true);
+  // toggleMapFiltersToUnactive(true);
   mainFormFieldsets.forEach((element) => {
     element.disabled = value;
     element.children.disabled = value;
@@ -132,4 +132,4 @@ resetButton.addEventListener('click', (evt) => {
 });
 
 
-export { initForm, resetFormToDefault };
+export { initForm, resetFormToDefault, toggleMapFiltersToUnactive };
