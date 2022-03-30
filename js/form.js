@@ -3,13 +3,11 @@ import { OfferTypeToPrice, ROOMS_CAPACITYS } from './generate-data.js';
 import { sliderInit, sliderReset } from './slider.js';
 import { mapReset, closeMapPopup } from './map.js';
 import { sendData } from './ajax.js';
+// import { toggleMapFiltersToUnactive } from './form-filter.js';
 
 const mainForm = document.querySelector('.ad-form');
-const mapFilters = document.querySelector('.map__filters');
 const mainFormFieldsets = mainForm.querySelectorAll('fieldset');
 const mainFormSlider = mainForm.querySelector('.ad-form__slider');
-const mapFiltersElements = mapFilters.querySelectorAll('select, fieldset');
-
 const priceField = mainForm.querySelector('[name="price"]');
 const typeOfHousesField = mainForm.querySelector('[name="type"]');
 const timeIn = mainForm.querySelector('[name="timein"]');
@@ -21,6 +19,7 @@ const capacity = mainForm.querySelector('[name="capacity"]');
 const resetButton = mainForm.querySelector('[type="reset"]');
 const submitButton = mainForm.querySelector('[type="submit"]');
 
+
 const pristine = new Pristine(mainForm, {
   classTo: 'ad-form__element--validating',
   errorClass: 'ad-form__element--validating-danger',
@@ -30,18 +29,9 @@ const pristine = new Pristine(mainForm, {
   errorTextClass: 'ad-form__element--validating-error'
 });
 
-const toggleMapFiltersToUnactive = (value) => {
-  mapFilters.classList.toggle('map__filters--disabled', value);
-  mapFiltersElements.forEach((element) => {
-    element.disabled = value;
-    element.children.disabled = value;
-  });
-};
-
 //=======FORM DISABLING-ACTIVATING
 const toggleFormToUnactive = (value) => {
   mainForm.classList.toggle('ad-form--disabled', value);
-  // toggleMapFiltersToUnactive(true);
   mainFormFieldsets.forEach((element) => {
     element.disabled = value;
     element.children.disabled = value;
@@ -131,5 +121,20 @@ resetButton.addEventListener('click', (evt) => {
   resetFormToDefault();
 });
 
+// const adsFilter = (array, cb, count) => {
+//   mapFilters.addEventListener('change', (evt) => {
+//     cb();
+//     const copyedArray = array.slice(); //
+//     const targetValue = evt.target.value;
+//     const targetRooms = evt.target.value;
+//     if (targetValue !== 'any') {
+//       const filteredAds = copyedArray.filter((el) => el.offer.type === targetValue);
+//       return  renderMarkers(filteredAds.slice(0, count));
+//     } else {
+//       return renderMarkers(array.slice(0, count));
+//     }
+//   });
+// };
 
-export { initForm, resetFormToDefault, toggleMapFiltersToUnactive };
+
+export { initForm, resetFormToDefault };

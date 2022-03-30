@@ -1,8 +1,11 @@
 import { getPopup } from './popup.js';
+import { adsFilter } from './form-filter.js';
 
+const COUNT_OF_ADS = 10;
 const latLngField = document.querySelector('[name="address"]');
 
 const map = L.map('map-canvas');
+const mainMarkerGroup = L.layerGroup().addTo(map);
 const markerGroup = L.layerGroup().addTo(map);
 const MAP_START_ZOOM = 12;
 const centerOfCity = {
@@ -69,11 +72,16 @@ const renderMarkers = (array) => {
   });
 };
 
+const clearMarkers = () => {
+  markerGroup.clearLayers();
+};
+
+
 //=======MAP INITIALIZE
 const mapInit = (cb) => {
   map.on('load', () => {
     setTimeout(cb, 500);
-    mainPinMarker.addTo(markerGroup);
+    mainPinMarker.addTo(mainMarkerGroup);
     latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
     mainPinMarker.on('moveend', (evt) => {
       const lat = evt.target.getLatLng().lat;
@@ -105,4 +113,10 @@ const mapReset = () => {
   }, MAP_START_ZOOM);
 };
 
-export { mapInit, mapReset, closeMapPopup, renderMarkers };
+
+const render = (array) => {
+  renderMarkers(array.slice(0, COUNT_OF_ADS));
+  adsFilter(array, () => markerGroup.clearLayers(), COUNT_OF_ADS);
+};
+
+export { mapInit, mapReset, closeMapPopup, renderMarkers, clearMarkers, render };

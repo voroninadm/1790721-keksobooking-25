@@ -1,12 +1,16 @@
 import { showAlert } from './utils.js';
 import { successMessagePopup, errorMessagePopup } from './form-messages.js';
-import { initForm, toggleMapFiltersToUnactive } from './form.js';
+import { initForm } from './form.js';
+import { toggleMapFiltersToUnactive } from './form-filter.js';
 import { mapInit } from './map.js';
+
+const GET_DATA_LINK = 'https://25.javascript.pages.academy/keksobooking/data';
+const SEND_DATA_LINK = 'https://25.javascript.pages.academy/keksobooking';
 
 const getData = (cb) => {
   initForm(true);
   toggleMapFiltersToUnactive(true);
-  fetch('https://25.javascript.pages.academy/keksobooking/data')
+  fetch(GET_DATA_LINK)
     .then((response) => response.json())
     .then((data) => {
       cb(data);
@@ -20,7 +24,7 @@ const getData = (cb) => {
 
 const sendData = (data, unblockButton) => {
   fetch(
-    'https://25.javascript.pages.academy/keksobooking',
+    SEND_DATA_LINK,
     {
       method: 'POST',
       body: data,
