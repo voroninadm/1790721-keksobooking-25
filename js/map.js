@@ -1,13 +1,12 @@
 import { getPopup } from './popup.js';
 import { adsFilter } from './form-filter.js';
 
-const COUNT_OF_ADS = 10;
 const latLngField = document.querySelector('[name="address"]');
 
 const map = L.map('map-canvas');
 const mainMarkerGroup = L.layerGroup().addTo(map);
 const markerGroup = L.layerGroup().addTo(map);
-const MAP_START_ZOOM = 12;
+const MAP_START_ZOOM = 12.5;
 const centerOfCity = {
   lat: 35.68442,
   lng: 139.75425
@@ -115,8 +114,8 @@ const mapReset = () => {
 
 
 const render = (array) => {
-  renderMarkers(array.slice(0, COUNT_OF_ADS));
-  adsFilter(array, () => markerGroup.clearLayers(), COUNT_OF_ADS);
+  renderMarkers(array.slice(0, 10));
+  adsFilter(array, () => markerGroup.clearLayers());
 };
 
 export { mapInit, mapReset, closeMapPopup, renderMarkers, clearMarkers, render };

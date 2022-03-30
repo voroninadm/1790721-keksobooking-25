@@ -34,6 +34,17 @@ const checkRooms = (ad) => ad.offer.rooms === +roomsFilter.value || roomsFilter.
 
 const checkGuests = (ad) => ad.offer.guests === +guestsFilter.value || guestsFilter.value === DEFAULT_VALUE;
 
+const checkFeatures = (ad) => Array.from(featuresFilter)
+  .every((feature) => {
+    if (!feature.checked) {
+      return true;
+    }
+    if (!ad.offer.features) { // если нет предлождения
+      return false;
+    }
+    return ad.offer.features.includes(feature.value);
+  });
+
 
 //=======FILTERS DISABLING-ACTIVATING
 const toggleMapFiltersToUnactive = (value) => {
@@ -43,39 +54,28 @@ const toggleMapFiltersToUnactive = (value) => {
   }
 };
 
-// const checkFeatures = (ad) => Array.from(featuresFilter)
-//   .every((filterFeature) => {
-//     if (!filterFeature.checked) {
-//       return true;
-//     }
-//     if (!ad.offer.features) {
-//       return false;
-//     }
-//     return ad.offer.features.includes(filterFeature.value);
-//   });
 
+// Отфильтрованные объявления
+const checkAllFilters = (ads)  => {
+  const filteredData = [];
+  for (let i = 0; i < ads.length; i++) {
+    const ad = ads[i];
+    if (
+      checkType(ad) &&
+      checkPrice(ad) &&
+      checkRooms(ad) &&
+      checkGuests(ad) &&
+      checkFeatures(ad)
+    ) {
+      filteredData.push(ad);
+    }
+    if (filteredData.length === COUNT_OF_ADS) {
+      break;
+    }
+  }
 
-// // Отфильтрованные объявления
-// const checkAllFilters = (ads)  => {
-//   const filteredData = [];
-//   for (let i = 0; i < ads.length; i++) {
-//     const ad = ads[i];
-//     if (
-//       checkType(ad) &&
-//       checkPrice(ad) &&
-//       checkRooms(ad) &&
-//       checkGuests(ad) &&
-//       checkFeatures(ad)
-//     ) {
-//       renderMarker(ad);
-//       filteredData.push(ad);
-//     }
-//     if (filteredData.length === COUNT_OF_ADS) {
-//       break;
-//     }
-//   }
-//   return filteredData;
-// };
+  return filteredData;
+};
 
 // // Перерисовка карты
 // const changeFilters = () => {
@@ -94,17 +94,26 @@ const toggleMapFiltersToUnactive = (value) => {
 // };
 
 
-const adsFilter = (array, cb, count) => {
-  mapFilters.addEventListener('change', (evt) => {
+// const adsFilter = (array, cb, count) => {
+//   mapFilters.addEventListener('change', (evt) => {
+//     cb();
+//     const copyedArray = array.slice(); //
+//     const targetValue = evt.target.value;
+//     if (targetValue !== 'any') {
+//       const filteredAds = copyedArray.filter((el) => el.offer.type === targetValue);
+//       return  renderMarkers(filteredAds.slice(0, count));
+//     } else {
+//       return renderMarkers(array.slice(0, count));
+//     }
+//   });
+// };
+
+
+const adsFilter = (array, cb) => {
+  mapFilters.addEventListener('change', () => {
     cb();
-    const copyedArray = array.slice(); //
-    const targetValue = evt.target.value;
-    if (targetValue !== 'any') {
-      const filteredAds = copyedArray.filter((el) => el.offer.type === targetValue);
-      return  renderMarkers(filteredAds.slice(0, count));
-    } else {
-      return renderMarkers(array.slice(0, count));
-    }
+    const filteredArray = checkAllFilters(array);
+    renderMarkers(filteredArray);
   });
 };
 

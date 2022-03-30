@@ -39,7 +39,7 @@ const sendData = (data, unblockButton) => {
       }
     })
     .catch(() => {
-      errorMessagePopup('Не удалось отправить форму. Попробуйте ещё раз');
+      errorMessagePopup('Что-то пошло не так. Попробуйте перезагрузить страницу');
       unblockButton();
     });
 };

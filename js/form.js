@@ -3,7 +3,6 @@ import { OfferTypeToPrice, ROOMS_CAPACITYS } from './generate-data.js';
 import { sliderInit, sliderReset } from './slider.js';
 import { mapReset, closeMapPopup } from './map.js';
 import { sendData } from './ajax.js';
-// import { toggleMapFiltersToUnactive } from './form-filter.js';
 
 const mainForm = document.querySelector('.ad-form');
 const mainFormFieldsets = mainForm.querySelectorAll('fieldset');
@@ -120,21 +119,6 @@ resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetFormToDefault();
 });
-
-// const adsFilter = (array, cb, count) => {
-//   mapFilters.addEventListener('change', (evt) => {
-//     cb();
-//     const copyedArray = array.slice(); //
-//     const targetValue = evt.target.value;
-//     const targetRooms = evt.target.value;
-//     if (targetValue !== 'any') {
-//       const filteredAds = copyedArray.filter((el) => el.offer.type === targetValue);
-//       return  renderMarkers(filteredAds.slice(0, count));
-//     } else {
-//       return renderMarkers(array.slice(0, count));
-//     }
-//   });
-// };
 
 
 export { initForm, resetFormToDefault };
