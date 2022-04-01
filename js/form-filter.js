@@ -1,4 +1,4 @@
-import { renderMarkers } from './map.js';
+import { renderMarkers, clearMarkers } from './map.js';
 import { debounce } from './utils.js';
 
 const mapFilters = document.querySelector('.map__filters');
@@ -48,10 +48,10 @@ const checkFeatures = (ad) => Array.from(featuresFilter)
 
 
 //=======FILTERS DISABLING-ACTIVATING
-const toggleMapFiltersToUnactive = (value) => {
-  mapFilters.classList.toggle('map__filters--disabled', value);
+const toggleMapFiltersToUnactive = (isActive) => {
+  mapFilters.classList.toggle('map__filters--disabled', isActive);
   for (const element of mapFiltersElements) {
-    element.disabled = value;
+    element.disabled = isActive;
   }
 };
 
@@ -76,6 +76,14 @@ const checkAllFilters = (ads)  => {
   }
 
   return filteredData;
+};
+
+// Перерисовка карты
+const onChangeFilters = (cb) => {
+  mapFilters.addEventListener('change', () => {
+    clearMarkers();
+    cb();
+  });
 };
 
 const adsFilter = (array, cb) => {

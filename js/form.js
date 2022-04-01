@@ -121,4 +121,4 @@ resetButton.addEventListener('click', (evt) => {
 });
 
 
-export { initForm, resetFormToDefault };
+export { initForm, resetFormToDefault,    toggleFormToUnactive, formValidating };
