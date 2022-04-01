@@ -1,12 +1,17 @@
 import { getPopup } from './popup.js';
-import { adsFilter } from './form-filter.js';
-import { toggleFormToUnactive } from './form.js';
 
 const latLngField = document.querySelector('[name="address"]');
 
 const map = L.map('map-canvas');
 const mainMarkerGroup = L.layerGroup().addTo(map);
 const markerGroup = L.layerGroup().addTo(map);
+
+const MapSettings = {
+  TILE: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  COPYRIGHT: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  MINZOOM: 5
+};
+
 const MAP_START_ZOOM = 12.5;
 
 const centerOfCity = {
@@ -52,14 +57,6 @@ const onMainPinMove = () => {
   });
 };
 
-// L.tileLayer(
-//   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-//   {
-//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-//     minZoom: 6,
-//   },
-// ).addTo(map);
-
 
 const renderMarker = (object) => {
   const lat = object.location.lat;
@@ -76,7 +73,11 @@ const renderMarker = (object) => {
 
   marker
     .addTo(markerGroup)
-    .bindPopup(getPopup(object));
+    .bindPopup(
+      getPopup(object),
+      {
+        keepInView: true,
+      });
 };
 
 const renderMarkers = (array) => {
@@ -91,23 +92,6 @@ const clearMarkers = () => {
 
 
 //=======MAP INITIALIZE
-// const mapInit = (cb) => {
-//   map.on('load', () => {
-//     setTimeout(cb, 500);
-//     mainPinMarker.addTo(mainMarkerGroup);
-//     latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
-//     mainPinMarker.on('moveend', (evt) => {
-//       const lat = evt.target.getLatLng().lat;
-//       const lng = evt.target.getLatLng().lng;
-//       latLngField.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-//     });
-//   })
-//     .setView({
-//       lat: centerOfCity.lat,
-//       lng: centerOfCity.lng
-//     }, MAP_START_ZOOM);
-// };
-
 const mapInit = (cb) => {
   map.on('load', () => {
     renderMainPinToMap();
@@ -117,11 +101,10 @@ const mapInit = (cb) => {
   })
     .setView(centerOfCity, MAP_START_ZOOM);
 
-  L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  L.tileLayer(MapSettings.TILE,
     {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      minZoom: 6,
+      attribution: MapSettings.COPYRIGHT,
+      minZoom: MapSettings.MINZOOM,
     },
   ).addTo(map);
 };
@@ -145,9 +128,4 @@ const mapReset = () => {
 };
 
 
-const render = (array) => {
-  renderMarkers(array.slice(0, 10));
-  adsFilter(array, () => markerGroup.clearLayers());
-};
-
-export { mapInit, mapReset, closeMapPopup, renderMarkers, clearMarkers, render, renderMainPinToMap };
+export { mapInit, mapReset, closeMapPopup, renderMarkers, clearMarkers, renderMainPinToMap };

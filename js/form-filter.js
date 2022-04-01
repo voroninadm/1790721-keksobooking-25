@@ -40,7 +40,7 @@ const checkFeatures = (ad) => Array.from(featuresFilter)
     if (!feature.checked) {
       return true;
     }
-    if (!ad.offer.features) { // если нет предлождения
+    if (!ad.offer.features) {
       return false;
     }
     return ad.offer.features.includes(feature.value);
@@ -55,6 +55,9 @@ const toggleMapFiltersToUnactive = (isActive) => {
   }
 };
 
+const mapFiltersReset = () => {
+  mapFilters.reset();
+};
 
 // Отфильтрованные объявления
 const checkAllFilters = (ads)  => {
@@ -82,7 +85,7 @@ const checkAllFilters = (ads)  => {
 const onChangeFilters = (cb) => {
   mapFilters.addEventListener('change', () => {
     clearMarkers();
-    cb();
+    cb(checkAllFilters());
   });
 };
 
@@ -96,5 +99,8 @@ const adsFilter = (array, cb) => {
 
 export {
   adsFilter,
-  toggleMapFiltersToUnactive
+  toggleMapFiltersToUnactive,
+  onChangeFilters,
+  checkAllFilters,
+  mapFiltersReset
 };

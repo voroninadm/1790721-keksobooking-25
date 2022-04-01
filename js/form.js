@@ -3,6 +3,7 @@ import { OfferTypeToPrice, ROOMS_CAPACITYS } from './generate-data.js';
 import { sliderInit, sliderReset } from './slider.js';
 import { mapReset, closeMapPopup } from './map.js';
 import { sendData } from './ajax.js';
+import { mapFiltersReset } from './form-filter.js';
 
 const mainForm = document.querySelector('.ad-form');
 const mainFormFieldsets = mainForm.querySelectorAll('fieldset');
@@ -83,13 +84,15 @@ const initForm = (isActive) => {
 };
 
 //========RESET FORM TO DEFAULT
-const resetFormToDefault = () => {
+const resetFormToDefault = (cb) => {
   mainForm.reset();
   priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];
   mapReset();
   sliderReset();
   pristine.reset();
   closeMapPopup();
+  mapFiltersReset();
+  cb();
 };
 
 const blockSubmitButton = () => {
@@ -103,22 +106,25 @@ const unblockSubmitButton = () => {
 };
 
 //handler. form validating on submit
-mainForm.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
-    evt.preventDefault();
-  } else {
-    evt.preventDefault();
-    blockSubmitButton();
-    const formData = new FormData(evt.target);
-    sendData(formData, unblockSubmitButton);
-  }
-});
+const onSubmitButton = () => {
+  mainForm.addEventListener('submit', (evt) => {
+    if (!pristine.validate()) {
+      evt.preventDefault();
+    } else {
+      evt.preventDefault();
+      blockSubmitButton();
+      const formData = new FormData(evt.target);
+      sendData(formData, unblockSubmitButton);
+    }
+  });
+};
 
 // handler. reset button
-resetButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  resetFormToDefault();
-});
+const onResetButton = () => {
+  resetButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    resetFormToDefault();
+  });
+};
 
-
-export { initForm, resetFormToDefault,    toggleFormToUnactive, formValidating };
+export { initForm, resetFormToDefault,    toggleFormToUnactive, formValidating, onResetButton, onSubmitButton };
