@@ -1,4 +1,5 @@
-import { renderMarkers, clearMarkers } from './map.js';
+import { renderMarkers } from './map.js';
+import { debounce } from './utils.js';
 
 const mapFilters = document.querySelector('.map__filters');
 const mapFiltersElements = mapFilters.children;
@@ -77,44 +78,12 @@ const checkAllFilters = (ads)  => {
   return filteredData;
 };
 
-// // Перерисовка карты
-// const changeFilters = () => {
-//   mapFilters.addEventListener('change', () => {
-//     clearMarkers();
-//     // cb();
-//   });
-// };
-
-// export {
-//   mapFilters,
-//   mapFiltersElements,
-//   toggleMapFiltersToUnactive,
-//   checkAllFilters,
-//   changeFilters
-// };
-
-
-// const adsFilter = (array, cb, count) => {
-//   mapFilters.addEventListener('change', (evt) => {
-//     cb();
-//     const copyedArray = array.slice(); //
-//     const targetValue = evt.target.value;
-//     if (targetValue !== 'any') {
-//       const filteredAds = copyedArray.filter((el) => el.offer.type === targetValue);
-//       return  renderMarkers(filteredAds.slice(0, count));
-//     } else {
-//       return renderMarkers(array.slice(0, count));
-//     }
-//   });
-// };
-
-
 const adsFilter = (array, cb) => {
-  mapFilters.addEventListener('change', () => {
+  mapFilters.addEventListener('change', debounce(() => {
     cb();
     const filteredArray = checkAllFilters(array);
     renderMarkers(filteredArray);
-  });
+  }));
 };
 
 export {
