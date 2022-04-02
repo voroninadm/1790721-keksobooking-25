@@ -4,16 +4,23 @@ import { successMessagePopup, errorMessagePopup } from './form-messages.js';
 const GET_DATA_LINK = 'https://25.javascript.pages.academy/keksobooking/data';
 const SEND_DATA_LINK = 'https://25.javascript.pages.academy/keksobooking';
 
-const getData = (cb) => {
-  fetch(GET_DATA_LINK)
-    .then((response) => response.json())
-    .then((data) => {
-      cb(data);
-    })
-    .catch(() => {
-      showAlert('Не удалось получить данные с сервера. Попробуйте перезагрузить страницу');
-    });
+
+const getData = async () => {
+  let response;
+  try {
+    response = await fetch(GET_DATA_LINK);
+    if (!response.ok) {
+      throw new Error();
+    }
+  }
+  catch (err) {
+    showAlert('Не удалось получить данные с сервера. Попробуйте перезагрузить страницу');
+    return;
+  }
+  const allAds = await response.json();
+  return allAds;
 };
+
 
 const sendData = (data, unblockButton) => {
   fetch(
@@ -29,10 +36,11 @@ const sendData = (data, unblockButton) => {
         unblockButton();
       } else {
         errorMessagePopup('Не удалось отправить форму. Попробуйте ещё раз');
+        unblockButton();
       }
     })
     .catch(() => {
-      errorMessagePopup('Что-то пошло не так. Попробуйте перезагрузить страницу');
+      errorMessagePopup('Не удалось отправить форму. Попробуйте ещё раз');
       unblockButton();
     });
 };

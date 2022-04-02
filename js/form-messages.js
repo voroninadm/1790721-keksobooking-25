@@ -24,7 +24,7 @@ const successMessagePopup = () => {
 
 const errorMessagePopup = () => {
   const message = errorMessageTemplate.cloneNode(true);
-  document.body.append(message);
+  document.body.appendChild(message);
   const messageButton = message.querySelector('[type="button"]');
   onMessageRemove(messageButton, message);
 };

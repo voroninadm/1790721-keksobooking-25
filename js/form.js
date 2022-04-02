@@ -84,7 +84,7 @@ const initForm = (isActive) => {
 };
 
 //========RESET FORM TO DEFAULT
-const resetFormToDefault = (cb) => {
+const resetFormToDefault = () => {
   mainForm.reset();
   priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];
   mapReset();
@@ -92,7 +92,6 @@ const resetFormToDefault = (cb) => {
   pristine.reset();
   closeMapPopup();
   mapFiltersReset();
-  cb();
 };
 
 const blockSubmitButton = () => {
@@ -120,10 +119,11 @@ const onSubmitButton = () => {
 };
 
 // handler. reset button
-const onResetButton = () => {
+const onResetButton = (cb) => {
   resetButton.addEventListener('click', (evt) => {
     evt.preventDefault();
     resetFormToDefault();
+    cb();
   });
 };
 

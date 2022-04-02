@@ -89,12 +89,12 @@ const onChangeFilters = (cb) => {
   });
 };
 
-const adsFilter = (array, cb) => {
+const adsFilter = (array, timeToDelay) => {
   mapFilters.addEventListener('change', debounce(() => {
-    cb();
+    clearMarkers();
     const filteredArray = checkAllFilters(array);
     renderMarkers(filteredArray);
-  }));
+  }, timeToDelay));
 };
 
 export {
