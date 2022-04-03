@@ -6,26 +6,20 @@ import { getData } from './ajax.js';
 
 const timeToDelay = 500;
 
-
 toggleFormToUnactive(true);
 toggleMapFiltersToUnactive(true);
 
 mapInit(() => toggleFormToUnactive(false));
 formValidating();
 
+const allAds = [];
 
-(async function () {
-  const allAds = await getData();
+(async () => {
+  const fetchedAds = await getData();
+  allAds.push(...fetchedAds);
   renderMarkers(allAds.slice(0, 10));
   toggleMapFiltersToUnactive(false);
   adsFilter(allAds, timeToDelay);
   onResetButton(() => renderMarkers(allAds.slice(0, 10)));
   onSubmitButton();
 })();
-
-// const listen = () => {
-//   document.addEventListener('click', (evt) => {
-//     console.log(evt);
-//   })
-// };
-// listen();
