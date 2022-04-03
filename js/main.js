@@ -1,15 +1,25 @@
-import { initForm } from './form.js';
-import { mapInit } from './map.js';
+import {toggleFormToUnactive} from './form.js';
+import {toggleMapFiltersToUnactive, adsFilter} from './form-filter.js';
+import {mapInit, renderMarkers} from './map.js';
+import {formValidating, onResetButton, onSubmitButton} from './form.js';
 import { getData } from './ajax.js';
-import { renderMarkers } from './map.js';
 
-initForm(true);
-mapInit(initForm(false));
+const timeToDelay = 500;
 
-const COUNT_OF_ADS = 3;
+toggleFormToUnactive(true);
+toggleMapFiltersToUnactive(true);
 
-//get data by ajax
-getData((ads) => {
-  renderMarkers(ads.slice(0, COUNT_OF_ADS));
-});
+mapInit(() => toggleFormToUnactive(false));
+formValidating();
 
+const allAds = [];
+
+(async () => {
+  const fetchedAds = await getData();
+  allAds.push(...fetchedAds);
+  renderMarkers(allAds.slice(0, 10));
+  toggleMapFiltersToUnactive(false);
+  adsFilter(allAds, timeToDelay);
+  onResetButton(() => renderMarkers(allAds.slice(0, 10)));
+  onSubmitButton();
+})();

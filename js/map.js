@@ -3,8 +3,17 @@ import { getPopup } from './popup.js';
 const latLngField = document.querySelector('[name="address"]');
 
 const map = L.map('map-canvas');
+const mainMarkerGroup = L.layerGroup().addTo(map);
 const markerGroup = L.layerGroup().addTo(map);
-const MAP_START_ZOOM = 12;
+
+const MapSettings = {
+  TILE: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  COPYRIGHT: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  MINZOOM: 5
+};
+
+const MAP_START_ZOOM = 12.5;
+
 const centerOfCity = {
   lat: 35.68442,
   lng: 139.75425
@@ -36,13 +45,17 @@ const mainPinMarker = L.marker(
   },
 );
 
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    minZoom: 6,
-  },
-).addTo(map);
+const renderMainPinToMap = () => {
+  mainPinMarker.addTo(mainMarkerGroup);
+};
+
+const onMainPinMove = () => {
+  mainPinMarker.on('moveend', (evt) => {
+    const lat = evt.target.getLatLng().lat;
+    const lng = evt.target.getLatLng().lng;
+    latLngField.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+  });
+};
 
 
 const renderMarker = (object) => {
@@ -60,7 +73,11 @@ const renderMarker = (object) => {
 
   marker
     .addTo(markerGroup)
-    .bindPopup(getPopup(object));
+    .bindPopup(
+      getPopup(object),
+      {
+        keepInView: true,
+      });
 };
 
 const renderMarkers = (array) => {
@@ -69,22 +86,27 @@ const renderMarkers = (array) => {
   });
 };
 
+const clearMarkers = () => {
+  markerGroup.clearLayers();
+};
+
+
 //=======MAP INITIALIZE
 const mapInit = (cb) => {
   map.on('load', () => {
-    setTimeout(cb, 500);
-    mainPinMarker.addTo(markerGroup);
+    renderMainPinToMap();
     latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
-    mainPinMarker.on('moveend', (evt) => {
-      const lat = evt.target.getLatLng().lat;
-      const lng = evt.target.getLatLng().lng;
-      latLngField.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-    });
+    onMainPinMove();
+    cb();
   })
-    .setView({
-      lat: centerOfCity.lat,
-      lng: centerOfCity.lng
-    }, MAP_START_ZOOM);
+    .setView(centerOfCity, MAP_START_ZOOM);
+
+  L.tileLayer(MapSettings.TILE,
+    {
+      attribution: MapSettings.COPYRIGHT,
+      minZoom: MapSettings.MINZOOM,
+    },
+  ).addTo(map);
 };
 
 //=======CLOSE MAP POPUP
@@ -94,6 +116,7 @@ const closeMapPopup = () => {
 
 //=======RESET MAP TO DEFAULT
 const mapReset = () => {
+  clearMarkers();
   latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
   mainPinMarker.setLatLng({
     lat: mainPinStartPosition.lat,
@@ -105,4 +128,5 @@ const mapReset = () => {
   }, MAP_START_ZOOM);
 };
 
-export { mapInit, mapReset, closeMapPopup, renderMarkers };
+
+export { mapInit, mapReset, closeMapPopup, renderMarkers, clearMarkers, renderMainPinToMap };

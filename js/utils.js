@@ -61,6 +61,14 @@ const showAlert = (message) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
+function debounce(callback, timeoutDelay) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
 
 export {
   getRandomPositiveInteger,
@@ -70,5 +78,6 @@ export {
   getImgNumber,
   getRandomMixedArray,
   showAlert,
-  isEscapeKey
+  isEscapeKey,
+  debounce
 };
