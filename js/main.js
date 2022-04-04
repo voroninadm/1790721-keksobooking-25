@@ -3,7 +3,7 @@ import {toggleMapFiltersToUnactive, adsFilter} from './form-filter.js';
 import {mapInit, renderMarkers} from './map.js';
 import {formValidating, onResetButton, onSubmitButton} from './form.js';
 import { getData } from './ajax.js';
-import { onAvatarChange } from './form-images.js';
+import { onAvatarChange, onImageAdd } from './form-images.js';
 
 const ADS_TO_RENDER = 10;
 const TIME_TO_DELAY = 500;
@@ -25,4 +25,5 @@ const allAds = [];
   onResetButton(() => renderMarkers(allAds.slice(0, ADS_TO_RENDER)));
   onSubmitButton(() => renderMarkers(allAds.slice(0, ADS_TO_RENDER)));
   onAvatarChange();
+  onImageAdd();
 })();
