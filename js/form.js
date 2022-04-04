@@ -4,6 +4,7 @@ import { sliderInit, sliderReset } from './slider.js';
 import { mapReset, closeMapPopup } from './map.js';
 import { sendData } from './ajax.js';
 import { mapFiltersReset } from './form-filter.js';
+import { setAvatarOnDefault } from './form-images.js';
 
 const mainForm = document.querySelector('.ad-form');
 const mainFormFieldsets = mainForm.querySelectorAll('fieldset');
@@ -92,6 +93,7 @@ const resetFormToDefault = () => {
   pristine.reset();
   closeMapPopup();
   mapFiltersReset();
+  setAvatarOnDefault();
 };
 
 const blockSubmitButton = () => {
