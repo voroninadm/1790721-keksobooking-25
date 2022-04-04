@@ -105,15 +105,15 @@ const unblockSubmitButton = () => {
 };
 
 //handler. form validating on submit
-const onSubmitButton = () => {
+const onSubmitButton = (cb) => {
   mainForm.addEventListener('submit', (evt) => {
-    if (!pristine.validate()) {
-      evt.preventDefault();
-    } else {
-      evt.preventDefault();
+    evt.preventDefault();
+    if (pristine.validate()) {
       blockSubmitButton();
       const formData = new FormData(evt.target);
       sendData(formData, unblockSubmitButton);
+      resetFormToDefault();
+      cb();
     }
   });
 };

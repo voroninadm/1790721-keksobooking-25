@@ -81,6 +81,7 @@ const checkAllFilters = (ads)  => {
   return filteredData;
 };
 
+
 // Перерисовка карты
 const onChangeFilters = (cb) => {
   mapFilters.addEventListener('change', () => {
