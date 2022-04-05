@@ -73,12 +73,8 @@ const checkAllFilters = (ads)  => {
     ) {
       filteredData.push(ad);
     }
-    if (filteredData.length === COUNT_OF_ADS) {
-      break;
-    }
   }
-
-  return filteredData;
+  return filteredData.slice(0, COUNT_OF_ADS);
 };
 
 
