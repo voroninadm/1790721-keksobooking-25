@@ -27,6 +27,7 @@ const priceMapFilter = {
   },
 };
 
+
 const checkType = (ad) => typeFilter.value === ad.offer.type || typeFilter.value === DEFAULT_VALUE;
 
 const checkPrice = (ad) => priceFilter.value === DEFAULT_VALUE || (ad.offer.price >= priceMapFilter[priceFilter.value].start && ad.offer.price <= priceMapFilter[priceFilter.value].end);
@@ -59,26 +60,11 @@ const mapFiltersReset = () => {
   mapFilters.reset();
 };
 
-// Отфильтрованные объявления
-const checkAllFilters = (ads)  => {
-  const filteredData = [];
-  for (let i = 0; i < ads.length; i++) {
-    const ad = ads[i];
-    if (
-      checkType(ad) &&
-      checkPrice(ad) &&
-      checkRooms(ad) &&
-      checkGuests(ad) &&
-      checkFeatures(ad)
-    ) {
-      filteredData.push(ad);
-    }
-  }
-  return filteredData.slice(0, COUNT_OF_ADS);
-};
+
+const checkAllFilters = (ads)  =>
+  ads.filter((ad) => checkType(ad) && checkPrice(ad) && checkRooms(ad) && checkGuests(ad) && checkFeatures(ad)).slice(0, COUNT_OF_ADS);
 
 
-// Перерисовка карты
 const onChangeFilters = (cb) => {
   mapFilters.addEventListener('change', () => {
     clearMarkers();

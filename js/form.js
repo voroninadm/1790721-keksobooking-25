@@ -114,9 +114,7 @@ const onSubmitButton = (cb) => {
     if (pristine.validate()) {
       blockSubmitButton();
       const formData = new FormData(evt.target);
-      sendData(formData, unblockSubmitButton);
-      resetFormToDefault();
-      cb();
+      sendData(formData, unblockSubmitButton, cb);
     }
   });
 };
@@ -130,4 +128,4 @@ const onResetButton = (cb) => {
   });
 };
 
-export { initForm, resetFormToDefault,    toggleFormToUnactive, formValidating, onResetButton, onSubmitButton };
+export { initForm, resetFormToDefault, toggleFormToUnactive, formValidating, onResetButton, onSubmitButton };

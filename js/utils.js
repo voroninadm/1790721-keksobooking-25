@@ -53,7 +53,6 @@ const showAlert = (message) => {
   alertContainer.style.fontSize = '30px';
   alertContainer.style.textAlign = 'center';
   alertContainer.style.backgroundColor = '#00bfffdb';
-
   alertContainer.textContent = message;
 
   document.body.append(alertContainer);

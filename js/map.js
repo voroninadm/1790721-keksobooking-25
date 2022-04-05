@@ -6,7 +6,7 @@ const map = L.map('map-canvas');
 const mainMarkerGroup = L.layerGroup().addTo(map);
 const markerGroup = L.layerGroup().addTo(map);
 
-const MapSettings = {
+const MAP_SETTINGS = {
   TILE: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   COPYRIGHT: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   MINZOOM: 5
@@ -101,10 +101,10 @@ const mapInit = (cb) => {
   })
     .setView(centerOfCity, MAP_START_ZOOM);
 
-  L.tileLayer(MapSettings.TILE,
+  L.tileLayer(MAP_SETTINGS.TILE,
     {
-      attribution: MapSettings.COPYRIGHT,
-      minZoom: MapSettings.MINZOOM,
+      attribution: MAP_SETTINGS.COPYRIGHT,
+      minZoom: MAP_SETTINGS.MINZOOM,
     },
   ).addTo(map);
 };
