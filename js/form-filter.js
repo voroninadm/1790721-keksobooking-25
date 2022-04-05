@@ -23,7 +23,7 @@ const priceMapFilter = {
   },
   high: {
     start: 50000,
-    end: 1000000,
+    end: Infinity,
   },
 };
 

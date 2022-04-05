@@ -32,16 +32,14 @@ const onImageAdd = () => {
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
     if (matches) {
       const imgSrc = URL.createObjectURL(file);
-      const newImg = `<img class="popup__photo" src="${imgSrc}" width="150" height="150"></img>`;
-      return adImageBlock.insertAdjacentHTML('beforeend', newImg);
+      adImageBlock.innerHTML = `<img class="popup__photo" src="${imgSrc}" width="70" height="70"></img>`;
     }
   });
 };
 
+
 const setImagesOnDefault = () => {
-  while (adImageBlock.firstChild) {
-    adImageBlock.removeChild(adImageBlock.firstChild);
-  }
+  adImageBlock.innerHTML = '';
 };
 
 export {onAvatarChange, setAvatarOnDefault, onImageAdd, setImagesOnDefault};
