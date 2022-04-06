@@ -1,5 +1,5 @@
 import { showAlert } from './utils.js';
-import { successMessagePopup, errorMessagePopup } from './form-messages.js';
+import { showSuccessMessagePopup, showErrorMessagePopup } from './form-messages.js';
 import { resetFormToDefault } from './form.js';
 
 const GET_DATA_LINK = 'https://25.javascript.pages.academy/keksobooking/data';
@@ -36,13 +36,13 @@ const sendData = async (data, unblockButton, cb) => {
     if (!request.ok) {
       throw new Error();
     }
-    successMessagePopup();
+    showSuccessMessagePopup();
     unblockButton();
     resetFormToDefault();
     cb();
   }
   catch (err) {
-    errorMessagePopup('Не удалось отправить форму. Попробуйте ещё раз');
+    showErrorMessagePopup('Не удалось отправить форму. Попробуйте ещё раз');
     unblockButton();
   }
 };

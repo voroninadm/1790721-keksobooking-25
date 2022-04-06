@@ -1,5 +1,5 @@
 import {toggleFormToUnactive} from './form.js';
-import {toggleMapFiltersToUnactive, adsFilter} from './form-filter.js';
+import {toggleMapFiltersToUnactive, onAdsFiltering} from './form-filter.js';
 import {mapInit, renderMarkers} from './map.js';
 import {formValidating, onResetButton, onSubmitButton} from './form.js';
 import { getData } from './ajax.js';
@@ -21,7 +21,7 @@ const allAds = [];
   allAds.push(...fetchedAds);
   renderMarkers(allAds.slice(0, ADS_TO_RENDER));
   toggleMapFiltersToUnactive(false);
-  adsFilter(allAds, TIME_TO_DELAY);
+  onAdsFiltering(allAds, TIME_TO_DELAY);
   onAvatarChange();
   onImageAdd();
   onResetButton(() => renderMarkers(allAds.slice(0, ADS_TO_RENDER)));

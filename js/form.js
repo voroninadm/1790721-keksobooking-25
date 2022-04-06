@@ -30,7 +30,7 @@ const pristine = new Pristine(mainForm, {
   errorTextClass: 'ad-form__element--validating-error'
 });
 
-//=======FORM DISABLING-ACTIVATING
+// form disabling-activating
 const toggleFormToUnactive = (value) => {
   mainForm.classList.toggle('ad-form--disabled', value);
   mainFormFieldsets.forEach((element) => {
@@ -45,7 +45,7 @@ const toggleFormToUnactive = (value) => {
   }
 };
 
-//=======FORM VALIDATING
+//form validating
 const formValidating = () => {
 
   //handler. synchronize type of houses and min price
@@ -76,7 +76,7 @@ const formValidating = () => {
   });
 };
 
-//=======FORM INITIALIZATION
+//form initialization
 const initForm = (isActive) => {
   toggleFormToUnactive(isActive);
   if (!isActive) {
@@ -84,7 +84,7 @@ const initForm = (isActive) => {
   }
 };
 
-//========RESET FORM TO DEFAULT
+//reset form to default
 const resetFormToDefault = () => {
   mainForm.reset();
   priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];

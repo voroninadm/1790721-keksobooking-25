@@ -58,7 +58,7 @@ const showAlert = (message) => {
   document.body.append(alertContainer);
 };
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const getIsEscapeKey = (evt) => evt.key === 'Escape';
 
 const debounce = (callback, timeoutDelay) => {
   let timeoutId;
@@ -77,6 +77,6 @@ export {
   getImgNumber,
   getRandomMixedArray,
   showAlert,
-  isEscapeKey,
+  getIsEscapeKey,
   debounce
 };
