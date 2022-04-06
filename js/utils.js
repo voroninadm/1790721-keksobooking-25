@@ -53,21 +53,20 @@ const showAlert = (message) => {
   alertContainer.style.fontSize = '30px';
   alertContainer.style.textAlign = 'center';
   alertContainer.style.backgroundColor = '#00bfffdb';
-
   alertContainer.textContent = message;
 
   document.body.append(alertContainer);
 };
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const getIsEscapeKey = (evt) => evt.key === 'Escape';
 
-function debounce(callback, timeoutDelay) {
+const debounce = (callback, timeoutDelay) => {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
 
 export {
@@ -78,6 +77,6 @@ export {
   getImgNumber,
   getRandomMixedArray,
   showAlert,
-  isEscapeKey,
+  getIsEscapeKey,
   debounce
 };

@@ -22,7 +22,6 @@ const sliderInit = (cb) => {
   });
 };
 
-
 const sliderReset = () => {
   sliderElement.noUiSlider.reset();
 };

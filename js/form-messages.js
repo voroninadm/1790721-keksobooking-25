@@ -1,15 +1,14 @@
-import { resetFormToDefault } from './form.js';
-import { isEscapeKey } from './utils.js';
+import { getIsEscapeKey } from './utils.js';
 
 const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
 
-const MessagePopup = (template, isCloseButton) => {
+const messagePopup = (template, isCloseButton) => {
   const message = template.cloneNode(true);
   document.body.appendChild(message);
 
   const onKeyUp = (evt) => {
-    if (isEscapeKey(evt)) {
+    if (getIsEscapeKey(evt)) {
       evt.preventDefault();
       message.remove();
       document.removeEventListener('keyup', onKeyUp);
@@ -32,13 +31,12 @@ const MessagePopup = (template, isCloseButton) => {
   }
 };
 
-const successMessagePopup = () => {
-  MessagePopup(successMessageTemplate);
-  resetFormToDefault();
+const showSuccessMessagePopup = () => {
+  messagePopup(successMessageTemplate);
 };
 
-const errorMessagePopup = () => {
-  MessagePopup(errorMessageTemplate, true);
+const showErrorMessagePopup = () => {
+  messagePopup(errorMessageTemplate, true);
 };
 
-export { successMessagePopup, errorMessagePopup };
+export { showSuccessMessagePopup, showErrorMessagePopup };

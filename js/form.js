@@ -4,6 +4,7 @@ import { sliderInit, sliderReset } from './slider.js';
 import { mapReset, closeMapPopup } from './map.js';
 import { sendData } from './ajax.js';
 import { mapFiltersReset } from './form-filter.js';
+import { setAvatarOnDefault, setImagesOnDefault } from './form-images.js';
 
 const mainForm = document.querySelector('.ad-form');
 const mainFormFieldsets = mainForm.querySelectorAll('fieldset');
@@ -29,7 +30,7 @@ const pristine = new Pristine(mainForm, {
   errorTextClass: 'ad-form__element--validating-error'
 });
 
-//=======FORM DISABLING-ACTIVATING
+// form disabling-activating
 const toggleFormToUnactive = (value) => {
   mainForm.classList.toggle('ad-form--disabled', value);
   mainFormFieldsets.forEach((element) => {
@@ -44,7 +45,7 @@ const toggleFormToUnactive = (value) => {
   }
 };
 
-//=======FORM VALIDATING
+//form validating
 const formValidating = () => {
 
   //handler. synchronize type of houses and min price
@@ -75,7 +76,7 @@ const formValidating = () => {
   });
 };
 
-//=======FORM INITIALIZATION
+//form initialization
 const initForm = (isActive) => {
   toggleFormToUnactive(isActive);
   if (!isActive) {
@@ -83,7 +84,7 @@ const initForm = (isActive) => {
   }
 };
 
-//========RESET FORM TO DEFAULT
+//reset form to default
 const resetFormToDefault = () => {
   mainForm.reset();
   priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];
@@ -92,6 +93,8 @@ const resetFormToDefault = () => {
   pristine.reset();
   closeMapPopup();
   mapFiltersReset();
+  setAvatarOnDefault();
+  setImagesOnDefault();
 };
 
 const blockSubmitButton = () => {
@@ -105,15 +108,13 @@ const unblockSubmitButton = () => {
 };
 
 //handler. form validating on submit
-const onSubmitButton = () => {
+const onSubmitButton = (cb) => {
   mainForm.addEventListener('submit', (evt) => {
-    if (!pristine.validate()) {
-      evt.preventDefault();
-    } else {
-      evt.preventDefault();
+    evt.preventDefault();
+    if (pristine.validate()) {
       blockSubmitButton();
       const formData = new FormData(evt.target);
-      sendData(formData, unblockSubmitButton);
+      sendData(formData, unblockSubmitButton, cb);
     }
   });
 };
@@ -127,4 +128,4 @@ const onResetButton = (cb) => {
   });
 };
 
-export { initForm, resetFormToDefault,    toggleFormToUnactive, formValidating, onResetButton, onSubmitButton };
+export { initForm, resetFormToDefault, toggleFormToUnactive, formValidating, onResetButton, onSubmitButton };

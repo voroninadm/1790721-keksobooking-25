@@ -12,7 +12,7 @@ const featuresFilter = mapFilters.querySelectorAll('.map__checkbox');
 const DEFAULT_VALUE = 'any';
 const COUNT_OF_ADS = 10;
 
-const priceMapFilter = {
+const PriceMapFilter = {
   low: {
     start: 0,
     end: 10000,
@@ -23,13 +23,14 @@ const priceMapFilter = {
   },
   high: {
     start: 50000,
-    end: 1000000,
+    end: Infinity,
   },
 };
 
+//filter functions
 const checkType = (ad) => typeFilter.value === ad.offer.type || typeFilter.value === DEFAULT_VALUE;
 
-const checkPrice = (ad) => priceFilter.value === DEFAULT_VALUE || (ad.offer.price >= priceMapFilter[priceFilter.value].start && ad.offer.price <= priceMapFilter[priceFilter.value].end);
+const checkPrice = (ad) => priceFilter.value === DEFAULT_VALUE || (ad.offer.price >= PriceMapFilter[priceFilter.value].start && ad.offer.price <= PriceMapFilter[priceFilter.value].end);
 
 const checkRooms = (ad) => ad.offer.rooms === +roomsFilter.value || roomsFilter.value === DEFAULT_VALUE;
 
@@ -46,8 +47,11 @@ const checkFeatures = (ad) => Array.from(featuresFilter)
     return ad.offer.features.includes(feature.value);
   });
 
+//main filter check function
+const checkAllFilters = (ads)  =>
+  ads.filter((ad) => checkType(ad) && checkPrice(ad) && checkRooms(ad) && checkGuests(ad) && checkFeatures(ad)).slice(0, COUNT_OF_ADS);
 
-//=======FILTERS DISABLING-ACTIVATING
+//filters disabling-activating
 const toggleMapFiltersToUnactive = (isActive) => {
   mapFilters.classList.toggle('map__filters--disabled', isActive);
   for (const element of mapFiltersElements) {
@@ -55,33 +59,12 @@ const toggleMapFiltersToUnactive = (isActive) => {
   }
 };
 
+//reset checked map filters
 const mapFiltersReset = () => {
   mapFilters.reset();
 };
 
-// Отфильтрованные объявления
-const checkAllFilters = (ads)  => {
-  const filteredData = [];
-  for (let i = 0; i < ads.length; i++) {
-    const ad = ads[i];
-    if (
-      checkType(ad) &&
-      checkPrice(ad) &&
-      checkRooms(ad) &&
-      checkGuests(ad) &&
-      checkFeatures(ad)
-    ) {
-      filteredData.push(ad);
-    }
-    if (filteredData.length === COUNT_OF_ADS) {
-      break;
-    }
-  }
-
-  return filteredData;
-};
-
-// Перерисовка карты
+//handler. on filter change
 const onChangeFilters = (cb) => {
   mapFilters.addEventListener('change', () => {
     clearMarkers();
@@ -89,7 +72,8 @@ const onChangeFilters = (cb) => {
   });
 };
 
-const adsFilter = (array, timeToDelay) => {
+//handler. filtering ads
+const onAdsFiltering = (array, timeToDelay) => {
   mapFilters.addEventListener('change', debounce(() => {
     clearMarkers();
     const filteredArray = checkAllFilters(array);
@@ -98,7 +82,7 @@ const adsFilter = (array, timeToDelay) => {
 };
 
 export {
-  adsFilter,
+  onAdsFiltering,
   toggleMapFiltersToUnactive,
   onChangeFilters,
   checkAllFilters,
