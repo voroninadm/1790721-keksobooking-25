@@ -49,7 +49,7 @@ const renderMainPinToMap = () => {
   mainPinMarker.addTo(mainMarkerGroup);
 };
 
-const onMainPinMove = () => {
+const checkMainPinMove = () => {
   mainPinMarker.on('moveend', (evt) => {
     const lat = evt.target.getLatLng().lat;
     const lng = evt.target.getLatLng().lng;
@@ -98,7 +98,7 @@ const mapInit = (cb) => {
   map.on('load', () => {
     renderMainPinToMap();
     latLngField.value = `${mainPinStartPosition.lat}, ${mainPinStartPosition.lng}`;
-    onMainPinMove();
+    checkMainPinMove();
     cb();
   })
     .setView(centerOfCity, MAP_START_ZOOM);

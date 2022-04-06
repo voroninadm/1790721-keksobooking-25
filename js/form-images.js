@@ -7,7 +7,7 @@ const adImageBlock = document.querySelector('.ad-form__photo');
 
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-const onAvatarChange = () => {
+const checkAvatarChange = () => {
   avatarInput.addEventListener('change', () => {
     const file = avatarInput.files[0];
     const fileName = file.name.toLowerCase();
@@ -24,7 +24,7 @@ const setAvatarOnDefault = () => {
 };
 
 
-const onImageAdd = () => {
+const checkImageAdd = () => {
   adImageInput.addEventListener('change', () => {
     const file = adImageInput.files[0];
     const fileName = file.name.toLowerCase();
@@ -41,4 +41,4 @@ const setImagesOnDefault = () => {
   adImageBlock.innerHTML = '';
 };
 
-export {onAvatarChange, setAvatarOnDefault, onImageAdd, setImagesOnDefault};
+export {checkAvatarChange, setAvatarOnDefault, checkImageAdd, setImagesOnDefault};

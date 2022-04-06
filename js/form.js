@@ -1,5 +1,5 @@
 import './pristine-config-ru.js';
-import { OfferTypeToPrice, ROOMS_CAPACITYS } from './generate-data.js';
+import { OfferTypeToPrice, ROOMS_CAPACITYS } from './form-data.js';
 import { sliderInit, sliderReset } from './slider.js';
 import { mapReset, closeMapPopup } from './map.js';
 import { sendData } from './ajax.js';
@@ -39,6 +39,7 @@ const toggleFormToUnactive = (value) => {
   });
   mainFormSlider.classList.toggle('ad-form--disabled', value);
   priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];
+  priceField.min = OfferTypeToPrice[typeOfHousesField.value];
   if (value) {
     const validate = () => pristine.validate(priceField);
     sliderInit(validate);
@@ -48,14 +49,14 @@ const toggleFormToUnactive = (value) => {
 //form validating
 const formValidating = () => {
 
-  //handler. synchronize type of houses and min price
-  const onLivingTypeChange = function () {
-    priceField.placeholder = OfferTypeToPrice[this.value];
+  //on change house type
+  typeOfHousesField.addEventListener('input', () => {
+    priceField.placeholder = OfferTypeToPrice[typeOfHousesField.value];
+    priceField.min = OfferTypeToPrice[typeOfHousesField.value];
     if (priceField.value) {
       pristine.validate(priceField);
     }
-  };
-  typeOfHousesField.addEventListener('input', onLivingTypeChange);
+  });
 
   //price for living validation
   const validatePrice = (value) => value >= OfferTypeToPrice[typeOfHousesField.value] && value <= 100000;
@@ -108,7 +109,7 @@ const unblockSubmitButton = () => {
 };
 
 //handler. form validating on submit
-const onSubmitButton = (cb) => {
+const checkSubmitButton = (cb) => {
   mainForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
@@ -120,7 +121,7 @@ const onSubmitButton = (cb) => {
 };
 
 // handler. reset button
-const onResetButton = (cb) => {
+const checkResetButton = (cb) => {
   resetButton.addEventListener('click', (evt) => {
     evt.preventDefault();
     resetFormToDefault();
@@ -128,4 +129,4 @@ const onResetButton = (cb) => {
   });
 };
 
-export { initForm, resetFormToDefault, toggleFormToUnactive, formValidating, onResetButton, onSubmitButton };
+export { initForm, resetFormToDefault, toggleFormToUnactive, formValidating, checkResetButton, checkSubmitButton };

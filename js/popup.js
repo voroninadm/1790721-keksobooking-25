@@ -1,4 +1,4 @@
-import { OfferTypeToReadable } from './generate-data.js';
+import { OfferTypeToReadable } from './form-data.js';
 
 const offerTemplate = document.querySelector('#card').content.querySelector('.popup');
 

@@ -65,7 +65,7 @@ const mapFiltersReset = () => {
 };
 
 //handler. on filter change
-const onChangeFilters = (cb) => {
+const checkChangeFilters = (cb) => {
   mapFilters.addEventListener('change', () => {
     clearMarkers();
     cb(checkAllFilters());
@@ -73,7 +73,7 @@ const onChangeFilters = (cb) => {
 };
 
 //handler. filtering ads
-const onAdsFiltering = (array, timeToDelay) => {
+const checkAdsFiltering = (array, timeToDelay) => {
   mapFilters.addEventListener('change', debounce(() => {
     clearMarkers();
     const filteredArray = checkAllFilters(array);
@@ -82,9 +82,9 @@ const onAdsFiltering = (array, timeToDelay) => {
 };
 
 export {
-  onAdsFiltering,
+  checkAdsFiltering,
   toggleMapFiltersToUnactive,
-  onChangeFilters,
+  checkChangeFilters,
   checkAllFilters,
   mapFiltersReset
 };
