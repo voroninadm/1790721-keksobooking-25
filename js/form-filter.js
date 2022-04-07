@@ -7,7 +7,6 @@ const typeFilter = mapFilters.querySelector('#housing-type');
 const priceFilter = mapFilters.querySelector('#housing-price');
 const roomsFilter = mapFilters.querySelector('#housing-rooms');
 const guestsFilter = mapFilters.querySelector('#housing-guests');
-const featuresFilter = mapFilters.querySelectorAll('.map__checkbox');
 
 const DEFAULT_VALUE = 'any';
 const COUNT_OF_ADS = 10;
@@ -32,20 +31,23 @@ const checkType = (ad) => typeFilter.value === ad.offer.type || typeFilter.value
 
 const checkPrice = (ad) => priceFilter.value === DEFAULT_VALUE || (ad.offer.price >= PriceMapFilter[priceFilter.value].start && ad.offer.price <= PriceMapFilter[priceFilter.value].end);
 
-const checkRooms = (ad) => ad.offer.rooms === +roomsFilter.value || roomsFilter.value === DEFAULT_VALUE;
+const checkRooms = (ad) => ad.offer.rooms.toString() === roomsFilter.value || roomsFilter.value === DEFAULT_VALUE;
 
-const checkGuests = (ad) => ad.offer.guests === +guestsFilter.value || guestsFilter.value === DEFAULT_VALUE;
+const checkGuests = (ad) => ad.offer.guests.toString() === guestsFilter.value || guestsFilter.value === DEFAULT_VALUE;
 
-const checkFeatures = (ad) => Array.from(featuresFilter)
-  .every((feature) => {
-    if (!feature.checked) {
-      return true;
-    }
-    if (!ad.offer.features) {
-      return false;
-    }
-    return ad.offer.features.includes(feature.value);
-  });
+const getSelectedChekboxes = () => Array.from(document.querySelectorAll('input[name="features"]:checked')).map((cb) => cb.value) ;
+
+const checkFeatures = (ad) => {
+  const adFeatures = ad.offer.features;
+  const selectedFeatures = getSelectedChekboxes();
+  if (selectedFeatures.length === 0) {
+    return true;
+  }
+  if (adFeatures) {
+    return selectedFeatures.every((feature) => adFeatures.includes(feature));
+  }
+  return false;
+};
 
 //main filter check function
 const checkAllFilters = (ads)  =>
