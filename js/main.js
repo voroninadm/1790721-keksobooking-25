@@ -16,6 +16,7 @@ formValidating();
 
 const allAds = [];
 
+//main async get
 (async () => {
   const fetchedAds = await getData();
   allAds.push(...fetchedAds);
