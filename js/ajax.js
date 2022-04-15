@@ -2,14 +2,16 @@ import { showAlert } from './utils.js';
 import { showSuccessMessagePopup, showErrorMessagePopup } from './form-messages.js';
 import { resetFormToDefault } from './form.js';
 
-const GET_DATA_LINK = 'https://25.javascript.pages.academy/keksobooking/data';
+//html academy link to json array of ads
+//const GET_DATA_LINK = 'https://25.javascript.pages.academy/keksobooking/data';
+const GET_DATA_LOCAL_LINK = './data/data.json';
 const SEND_DATA_LINK = 'https://25.javascript.pages.academy/keksobooking';
 
 
 const getData = async () => {
   let response;
   try {
-    response = await fetch(GET_DATA_LINK);
+    response = await fetch(GET_DATA_LOCAL_LINK);
     if (!response.ok) {
       throw new Error();
     }
